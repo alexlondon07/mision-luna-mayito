@@ -8,8 +8,8 @@ const TEXT = {
     resourceChallengeTitle:"Reto oficial", resourceChallengeText:"Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.", resourceChallengeLink:"Leer el reto ↗",
     challengeDays:"días de misión", challengeResources:"recursos vitales",
     resourceDonkiTitle:"Evento solar real · NASA DONKI", resourceDonkiText:"Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.", resourceDonkiLink:"Ver el registro ↗", donkiRecord:"Registro NASA",
-    resourceWeatherTitle:"Boletines reales · NASA DONKI", resourceWeatherText:"Cada día muestra un registro guardado distinto. En un aviso solar, una acción expuesta puede costar 1 refugio extra según nuestras reglas de simulación.", resourceWeatherLink:"Ver boletín ↗",
-    realDataBadge:"DATO REAL DE NASA", weatherTitle:"Parte de control · día {day}", weatherDisclaimer:"Registro guardado, no pronóstico lunar ni medición de esta base.", weatherRule:"⚠️ Regla del simulador: la acción expuesta cuesta 1 refugio extra hoy.", weatherResult:"Por el simulacro del boletín solar, esta acción también costó 1 punto de refugio.", weatherLink:"Abrir registro NASA ↗", weatherSEP:"Partículas solares", weatherCME:"Expulsión solar", weatherFLR:"Fulguración solar", weatherReport:"Informe espacial", weatherOther:"Boletín {type}",
+    resourceWeatherTitle:"Boletines reales · NASA DONKI", resourceWeatherText:"Usamos avisos solares reales en los días 1, 4 y 6. Su fecha y enlace vienen de DONKI; el costo de refugio es una regla del juego.", resourceWeatherLink:"Ver boletín ↗",
+    realDataBadge:"RETO CON DATO NASA", weatherTitle:"¿Qué nos cuenta el Sol?", weatherDisclaimer:"Registro real guardado; no mide el peligro en nuestra base.", weatherRule:"🎮 Si eliges la tarea expuesta, gastarás 1 punto extra de refugio. Mira el cambio en las opciones.", weatherAction:"🎮 Hoy debes decidir si refuerzas el refugio o sigues investigando. El aviso inspira este simulacro; no calcula el riesgo lunar.", weatherMeaningCME:"NASA registró una expulsión de material del Sol.", weatherMeaningSEP:"NASA registró partículas energéticas del Sol.", weatherMeaningFLR:"NASA registró una llamarada solar.", weatherResult:"Por el simulacro del boletín solar, esta acción también costó 1 punto de refugio.", weatherLink:"Abrir registro NASA ↗", weatherSEP:"Partículas solares", weatherCME:"Expulsión solar", weatherFLR:"Fulguración solar", weatherReport:"Informe espacial", weatherOther:"Boletín {type}",
     weatherDayStory:"Mayito lee el boletín guardado de NASA: {type}, publicado el {date}. Es una observación espacial, no una medida del peligro aquí. Nos recuerda que debemos planear cómo proteger la base. ¿Reforzamos el refugio o seguimos investigando?", weatherDaySource:"Boletín DONKI: {type}, {date}. El evento SEP de 2017 inspira el ejercicio de protección. Los puntos son reglas del juego; ninguno de estos registros mide nuestra base lunar.", weatherRecentLink:"Ver boletín reciente ↗",
     resourceMoonTitle:"El ambiente lunar · NASA", resourceMoonText:"Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.", resourceMoonLink:"Explorar la ciencia ↗",
     resourceLifeTitle:"Soporte vital · NASA", resourceLifeText:"Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.", resourceLifeLink:"Leer sobre soporte vital ↗",
@@ -60,8 +60,8 @@ const TEXT = {
     resourceChallengeTitle:"Official challenge", resourceChallengeText:"Sets the goal: a game for children that shows the trade-offs of running a lunar or Martian base.", resourceChallengeLink:"Read the challenge ↗",
     challengeDays:"mission days", challengeResources:"vital resources",
     resourceDonkiTitle:"Real solar event · NASA DONKI", resourceDonkiText:"We queried the DONKI API and saved a real solar particle event. This record inspires the day 4 alert; points are learning rules.", resourceDonkiLink:"See the record ↗", donkiRecord:"NASA record",
-    resourceWeatherTitle:"Real bulletins · NASA DONKI", resourceWeatherText:"Each day shows a different saved record. For solar bulletins, an exposed action may cost 1 extra shelter point under our simulation rules.", resourceWeatherLink:"See bulletin ↗",
-    realDataBadge:"REAL NASA DATA", weatherTitle:"Mission control · day {day}", weatherDisclaimer:"Saved record, not a lunar forecast or measurement of this base.", weatherRule:"⚠️ Simulator rule: the exposed action costs 1 extra shelter point today.", weatherResult:"Because of the solar bulletin drill, this action also cost 1 shelter point.", weatherLink:"Open NASA record ↗", weatherSEP:"Solar particles", weatherCME:"Solar eruption", weatherFLR:"Solar flare", weatherReport:"Space report", weatherOther:"{type} bulletin",
+    resourceWeatherTitle:"Real bulletins · NASA DONKI", resourceWeatherText:"Real solar bulletins appear on days 1, 4 and 6. Their dates and links come from DONKI; the shelter cost is a game rule.", resourceWeatherLink:"See bulletin ↗",
+    realDataBadge:"NASA DATA CHALLENGE", weatherTitle:"What is the Sun telling us?", weatherDisclaimer:"Saved real record; it does not measure danger at our base.", weatherRule:"🎮 If you choose the exposed task, you spend 1 extra shelter point. Check the choice preview.", weatherAction:"🎮 Today you decide whether to strengthen the shelter or keep exploring. The bulletin inspires this drill; it does not calculate lunar risk.", weatherMeaningCME:"NASA recorded material erupting from the Sun.", weatherMeaningSEP:"NASA recorded energetic particles from the Sun.", weatherMeaningFLR:"NASA recorded a solar flare.", weatherResult:"Because of the solar bulletin drill, this action also cost 1 shelter point.", weatherLink:"Open NASA record ↗", weatherSEP:"Solar particles", weatherCME:"Solar eruption", weatherFLR:"Solar flare", weatherReport:"Space report", weatherOther:"{type} bulletin",
     weatherDayStory:"Mayito reads NASA's saved bulletin: {type}, issued on {date}. It is a space observation, not a measurement of danger here. It reminds us to plan how to protect the base. Should we strengthen the shelter or keep exploring?", weatherDaySource:"Recent DONKI record: {type}, {date}. A 2017 SEP event inspires this protection exercise. The points are game rules; neither record measures our lunar base.", weatherRecentLink:"See recent bulletin ↗",
     resourceMoonTitle:"The lunar environment · NASA", resourceMoonText:"Explains why people on the Moon need protection from space radiation and extreme temperatures.", resourceMoonLink:"Explore the science ↗",
     resourceLifeTitle:"Life support · NASA", resourceLifeText:"Helped us explain why breathable air and recycling are essential for a crew.", resourceLifeLink:"Read about life support ↗",
@@ -264,23 +264,28 @@ function donkiDate() {
   return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(date);
 }
 function currentWeather() {
-  const missionOrder = [0, 1, 2, 4, 3, 5, 6];
-  return SPACE_WEATHER_EVENTS[missionOrder[state?.day || 0] % SPACE_WEATHER_EVENTS.length];
+  const solar = SPACE_WEATHER_EVENTS.filter(item => ["SEP", "CME", "FLR"].includes(item.type));
+  const index = state?.day === 3 ? 1 : state?.day === 5 ? 2 : 0;
+  return solar[index % solar.length] || {type:"SEP", issued:NASA_EVENT.eventTime, link:NASA_EVENT.link};
 }
 function solarDrill() {
-  return state && [0, 5].includes(state.day) && ["SEP", "CME", "FLR"].includes(currentWeather().type);
+  return state && [0, 5].includes(state.day);
 }
 function exposedChoice(choice) {
   return solarDrill() && ((state.day === 0 && choice === DAYS[0].choices[0]) || (state.day === 5 && choice === DAYS[5].choices[1]));
 }
 function renderWeather() {
+  const visible = state && [0, 3, 5].includes(state.day);
+  $("weather-strip").classList.toggle("hidden", !visible);
+  if (!visible) return;
   const bulletin = currentWeather();
-  const date = new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"short", year:"numeric", timeZone:"UTC"}).format(new Date(bulletin.issued));
-  $("weather-title").textContent = label("weatherTitle").replace("{day}", String((state?.day || 0) + 1));
+  const date = new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(new Date(bulletin.issued));
+  $("weather-meaning").textContent = label("weatherMeaning" + bulletin.type);
   $("weather-details").textContent = weatherType() + " · " + date + " · " + bulletin.issued.slice(11, 16) + " UTC";
   $("weather-link").href = bulletin.link;
-  $("resource-weather-link").href = SPACE_WEATHER_EVENTS[0].link;
+  $("resource-weather-link").href = SPACE_WEATHER_EVENTS.find(item => ["SEP", "CME", "FLR"].includes(item.type))?.link || NASA_EVENT.link;
   $("weather-rule").classList.toggle("hidden", !solarDrill());
+  $("weather-action").classList.toggle("hidden", state.day !== 3);
 }
 function weatherType() {
   const type = currentWeather().type;
