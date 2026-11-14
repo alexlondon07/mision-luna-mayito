@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#451471">
+  <title>Misión Luna con Mayito</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-orbit" aria-hidden="true">✦</span><span><span data-i18n="brandTitle">MISIÓN LUNA</span><small data-i18n="brandBy">con Mayito</small></span></div>
+      <a class="resources-nav" href="#resources" data-i18n="resourcesNav">Recursos del proyecto</a>
+      <div class="language-switch" role="group" aria-label="Language / Idioma">
+        <button id="lang-es" type="button" aria-pressed="true">ES</button>
+        <button id="lang-en" type="button" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <main>
+      <section id="intro" class="intro screen">
+        <div class="intro-art">
+          <div class="planet planet-one"></div><div class="planet planet-two"></div>
+          <span class="orbit-star star-one" aria-hidden="true">✦</span><span class="orbit-star star-two" aria-hidden="true">✧</span>
+          <img class="intro-mayito" src="assets/mayito.webp" alt="Mayito">
+          <div class="intro-badge" data-i18n="introBadge">7 días · 1 misión</div>
+          <img class="team-portrait" src="assets/equipo.webp" alt="Mayito, Violeta y Rocco">
+        </div>
+        <div class="intro-content">
+          <p class="eyebrow" data-i18n="introEyebrow">UNA AVENTURA PARA DECIDIR</p>
+          <h1 data-i18n="introTitle">¡Mayito necesita tu ayuda en la Luna!</h1>
+          <p class="lead" data-i18n="introLead">Su equipo vivirá 7 días en una base lunar. Tú decidirás cómo cuidar el aire, la energía y el refugio.</p>
+          <div class="mayito-says"><strong>Mayito:</strong> <span data-i18n="introSays">«Cada decisión ayuda en algo, pero también cuesta algo. ¡Pensemos antes de elegir!»</span></div>
+          <div class="how-to-play">
+            <h2 data-i18n="howTitle">¿Cómo se juega?</h2>
+            <ol>
+              <li data-i18n="howOne">Lee el problema del día.</li>
+              <li data-i18n="howTwo">Mira qué gana y qué pierde cada opción.</li>
+              <li data-i18n="howThree">Elige una. Llega al día 7 sin agotar los recursos.</li>
+            </ol>
+          </div>
+          <button id="start" class="primary" type="button"><span data-i18n="start">¡Empezar la misión!</span><span aria-hidden="true"> →</span></button>
+        </div>
+      </section>
+      <section id="play" class="play screen hidden" aria-live="polite">
+        <div class="play-top"><div><p class="eyebrow" id="day-label"></p><h1 id="event-title"></h1></div><button id="restart" class="restart" type="button" data-i18n="restart">Empezar de nuevo</button></div>
+        <div id="progress" class="progress" aria-label="Progreso de la misión"></div>
+        <p class="mission-goal" data-i18n="missionGoal">🎯 Meta: llegar al día 7 con aire, energía y refugio por encima de cero.</p>
+        <div class="game-grid">
+          <aside class="status-card" aria-label="Recursos de la base">
+            <h2 data-i18n="resourcesTitle">Recursos de la base</h2>
+            <p class="status-intro" data-i18n="resourcesIntro">Si una barra llega a cero, la misión termina.</p>
+            <div class="meter"><div class="meter-top"><span data-i18n="oxygen">🫧 Aire</span><strong id="oxygen-value"></strong></div><div class="track"><div id="oxygen-bar" class="fill oxygen"></div></div><small data-i18n="oxygenHelp">Lo que respiramos</small></div>
+            <div class="meter"><div class="meter-top"><span data-i18n="energy">⚡ Energía</span><strong id="energy-value"></strong></div><div class="track"><div id="energy-bar" class="fill energy"></div></div><small data-i18n="energyHelp">Enciende las máquinas</small></div>
+            <div class="meter"><div class="meter-top"><span data-i18n="shield">🛡️ Refugio</span><strong id="shield-value"></strong></div><div class="track"><div id="shield-bar" class="fill shield"></div></div><small data-i18n="shieldHelp">Nos protege afuera</small></div>
+            <div class="night-note"><span aria-hidden="true">🌙</span><span data-i18n="nightCost">Cada noche se usa 1 aire y 1 energía.</span></div>
+            <p class="score-line"><span aria-hidden="true">⭐</span> <span data-i18n="discoveries">Descubrimientos</span>: <strong id="science-value">0</strong></p>
+          </aside>
+          <div class="story-card">
+            <div class="narrator"><img src="assets/mayito.webp" alt="" class="narrator-image"><div class="speech"><span class="speech-label" data-i18n="mayitoSays">MAYITO DICE</span><p id="event-story"></p></div></div>
+            <div id="event-source" class="source-note hidden"></div>
+            <div id="choice-area"><h2 data-i18n="chooseTitle">¿Qué harías tú?</h2><p class="choice-help" data-i18n="choiceHelp">Mira cómo quedaría la base después de la noche.</p><div id="choices" class="choices"></div></div>
+            <div id="result" class="result hidden"></div>
+          </div>
+        </div>
+      </section>
+      <section id="ending" class="ending screen hidden" aria-live="polite">
+        <div class="ending-card"><img src="assets/mayito.webp" alt="" class="ending-mayito"><div><p class="eyebrow" data-i18n="missionEnd">FIN DE LA MISIÓN</p><h1 id="ending-title"></h1><p id="ending-text" class="ending-text"></p><p id="ending-learning" class="learning"></p><button id="again" class="primary" type="button"><span data-i18n="again">¡Jugar otra vez!</span><span aria-hidden="true"> ↻</span></button></div></div>
+      </section>
+      <section id="resources" class="resources-section" aria-labelledby="resources-heading">
+        <p class="eyebrow" data-i18n="resourcesEyebrow">DE DÓNDE SALE CADA IDEA</p>
+        <h2 id="resources-heading" data-i18n="resourcesHeading">Recursos del proyecto</h2>
+        <p class="resources-lead" data-i18n="resourcesLead">Estas fuentes nos ayudaron a crear la historia y explicar las decisiones. Los puntos de las barras son reglas educativas inventadas para el juego.</p>
+        <div class="resource-list">
+          <article class="resource-card"><span aria-hidden="true">🧭</span><h3 data-i18n="resourceChallengeTitle">Reto oficial</h3><p data-i18n="resourceChallengeText">Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.</p><a href="https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details" target="_blank" rel="noopener noreferrer" data-i18n="resourceChallengeLink">Leer el reto ↗</a></article>
+          <article class="resource-card"><span aria-hidden="true">☀️</span><h3 data-i18n="resourceDonkiTitle">Evento solar real · NASA DONKI</h3><p data-i18n="resourceDonkiText">El registro de partículas solares del 10 de septiembre de 2017 inspira la alerta del día 4. No es una medida de radiación de nuestra base ficticia.</p><a href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1" target="_blank" rel="noopener noreferrer" data-i18n="resourceDonkiLink">Ver el registro ↗</a></article>
+          <article class="resource-card"><span aria-hidden="true">🛡️</span><h3 data-i18n="resourceMoonTitle">El ambiente lunar · NASA</h3><p data-i18n="resourceMoonText">Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.</p><a href="https://science.nasa.gov/moon/weather-on-the-moon/" target="_blank" rel="noopener noreferrer" data-i18n="resourceMoonLink">Explorar la ciencia ↗</a></article>
+          <article class="resource-card"><span aria-hidden="true">🫧</span><h3 data-i18n="resourceLifeTitle">Soporte vital · NASA</h3><p data-i18n="resourceLifeText">Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.</p><a href="https://www.nasa.gov/humans-in-space/deep-space-habitation-overview/" target="_blank" rel="noopener noreferrer" data-i18n="resourceLifeLink">Leer sobre soporte vital ↗</a></article>
+          <article class="resource-card"><span aria-hidden="true">🌱</span><h3 data-i18n="resourceFoodTitle">Comida espacial · CSA</h3><p data-i18n="resourceFoodText">La guía educativa de la Agencia Espacial Canadiense inspiró la decisión sobre el huerto y las reservas de comida.</p><a href="https://www.asc-csa.gc.ca/eng/youth-educators/toolkits/food-production/" target="_blank" rel="noopener noreferrer" data-i18n="resourceFoodLink">Ver la guía ↗</a></article>
+          <article class="resource-card"><span aria-hidden="true">🐰</span><h3 data-i18n="resourceCharactersTitle">Mayito y sus amigos</h3><p data-i18n="resourceCharactersText">Las ilustraciones de Mayito, Violeta y Rocco vienen de Mi Superpoder es la Programación.</p><a href="https://misuperpodereslaprogramacion.com/" target="_blank" rel="noopener noreferrer" data-i18n="resourceCharactersLink">Conocer el proyecto ↗</a></article>
+        </div>
+        <p class="build-note" data-i18n="buildNote">🧩 Hecho con HTML, CSS y JavaScript. Usamos Git para guardar las versiones del proyecto.</p>
+      </section>
+    </main>
+    <footer><p data-i18n="footerNote">Puntos del juego = reglas educativas, no medidas reales de una base lunar.</p><div><a href="https://misuperpodereslaprogramacion.com/" target="_blank" rel="noopener noreferrer" data-i18n="charactersSource">Personajes: Mi Superpoder es la Programación ↗</a><a href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1" target="_blank" rel="noopener noreferrer" data-i18n="nasaSource">Evento solar: NASA DONKI ↗</a></div></footer>
+  </div>
+</body>
+</html>
