@@ -22,9 +22,9 @@ const TEXT = {
     start:"¡Empezar la misión!", restart:"Empezar de nuevo",
     missionGoal:"🎯 Meta: terminar 7 días con aire, energía y refugio por encima de cero.",
     resourcesTitle:"Recursos de la base", resourcesIntro:"Si una barra llega a cero, la misión termina.",
-    oxygen:"🫧 Aire", oxygenHelp:"Lo que respiramos",
-    energy:"⚡ Energía", energyHelp:"Enciende las máquinas",
-    shield:"🛡️ Refugio", shieldHelp:"Nos protege",
+    oxygenName:"Aire", oxygenHelp:"Lo que respiramos",
+    energyName:"Energía", energyHelp:"Enciende las máquinas",
+    shieldName:"Refugio", shieldHelp:"Nos protege",
     nightCost:"Cada noche se usa 1 aire y 1 energía.",
     discoveries:"Descubrimientos", mayitoSays:"MAYITO DICE",
     chooseTitle:"¿Qué harías tú?", choiceHelp:"Mira cómo quedaría la base después de la noche.",
@@ -63,9 +63,9 @@ const TEXT = {
     start:"Start the mission!", restart:"Start over",
     missionGoal:"🎯 Goal: finish 7 days with air, power, and shelter above zero.",
     resourcesTitle:"Base resources", resourcesIntro:"If any bar reaches zero, the mission ends.",
-    oxygen:"🫧 Air", oxygenHelp:"What we breathe",
-    energy:"⚡ Power", energyHelp:"Runs the machines",
-    shield:"🛡️ Shelter", shieldHelp:"Keeps us safe",
+    oxygenName:"Air", oxygenHelp:"What we breathe",
+    energyName:"Power", energyHelp:"Runs the machines",
+    shieldName:"Shelter", shieldHelp:"Keeps us safe",
     nightCost:"Each night uses 1 air and 1 power.",
     discoveries:"Discoveries", mayitoSays:"MAYITO SAYS",
     chooseTitle:"What would you do?", choiceHelp:"See how the base would look after tonight.",
@@ -152,6 +152,12 @@ const DAYS = [
 ];
 
 const NASA_URL = "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1";
+// Cada pareja corresponde a las dos opciones de un día.
+const CHOICE_ICONS = [
+  ["⚡", "🫧"], ["🌱", "🥫"], ["📡", "🔋"], ["🛡️", "🔭"],
+  ["🫧", "⚡"], ["🛡️", "🔭"], ["🔬", "🫧"]
+];
+const RESOURCE_ICONS = {oxygen:"🫧", energy:"⚡", shield:"🛡️"};
 const $ = id => document.getElementById(id);
 let language = "es";
 let state = null;
@@ -236,8 +242,7 @@ function renderSource(event) {
   box.append(strong, words, link);
 }
 function resourceName(key) {
-  const names = language === "es" ? {oxygen:"Aire", energy:"Energía", shield:"Refugio"} : {oxygen:"Air", energy:"Power", shield:"Shelter"};
-  return names[key];
+  return label(key + "Name");
 }
 function renderChoices(event) {
   const box = $("choices");
@@ -248,8 +253,15 @@ function renderChoices(event) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "choice";
+    const heading = document.createElement("div");
+    heading.className = "choice-heading";
+    const symbol = document.createElement("span");
+    symbol.className = "choice-symbol";
+    symbol.setAttribute("aria-hidden", "true");
+    symbol.textContent = CHOICE_ICONS[state.day][i];
     const title = document.createElement("strong");
     title.textContent = translate(choice.title);
+    heading.append(symbol, title);
     const detail = document.createElement("span");
     detail.className = "choice-detail";
     detail.textContent = translate(choice.detail);
@@ -260,9 +272,16 @@ function renderChoices(event) {
     previewLabel.textContent = label("afterNight") + ":";
     preview.append(previewLabel);
     for (const key of ["oxygen", "energy", "shield"]) {
+      if (forecast[key] === state[key]) continue;
       const chip = document.createElement("span");
-      chip.className = "preview-chip" + (forecast[key] <= 0 ? " danger" : "");
-      chip.textContent = resourceName(key) + " " + state[key] + "→" + Math.max(0, forecast[key]);
+      chip.className = "preview-chip " + key + (forecast[key] <= 0 ? " danger" : forecast[key] > state[key] ? " up" : " down");
+      const icon = document.createElement("span");
+      icon.className = "preview-icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = RESOURCE_ICONS[key];
+      const values = document.createElement("span");
+      values.textContent = resourceName(key) + " " + state[key] + "→" + Math.max(0, forecast[key]);
+      chip.append(icon, values);
       preview.append(chip);
     }
     if (choice.change.science) {
@@ -271,7 +290,7 @@ function renderChoices(event) {
       discovery.textContent = "⭐ +1 " + label("discoveries");
       preview.append(discovery);
     }
-    button.append(title, detail, preview);
+    button.append(heading, detail, preview);
     if (choice.cost) {
       const cost = document.createElement("small");
       cost.className = "choice-cost";

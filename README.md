@@ -17,6 +17,8 @@ Abre `index.html` en un navegador. No necesita instalar programas, crear una cue
 
 En `game.js`, `change:{energy:-2,science:1}` significa que la decisión usa dos puntos de energía y suma un descubrimiento. Para cambiar un texto de una misión, escribe las dos versiones: `es` y `en`. Los puntos son **reglas del juego**, no cantidades reales de oxígeno, electricidad ni radiación. El máximo de aire, energía y refugio es 10. Cada noche se gasta un punto de aire y uno de energía.
 
+Los iconos de las opciones están en `CHOICE_ICONS`, al comienzo de la lógica del juego. Cada pareja representa las dos opciones de un día. Las tarjetas repiten los iconos de aire, energía y refugio del panel para mostrar cómo cambian después de la noche.
+
 Las ilustraciones de Mayito, Violeta y Rocco provienen de [Mi Superpoder es la Programación](https://misuperpodereslaprogramacion.com/). Mayito guía cada día; Violeta y Rocco aparecen en la historia.
 
 ## Dato real que inspiró el juego
