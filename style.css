@@ -235,6 +235,7 @@ h2 { font-size: 25px; letter-spacing: -.03em; }
 .weather-strip strong { font-size: 16px; }
 .weather-strip p { margin: 0; font-weight: 900; }
 .weather-strip small { color: #30516a; }
+.weather-rule { margin: 8px 0 0 !important; padding: 7px 10px; border-radius: 9px; background: #ffbc52; color: var(--ink); font-size: 13px; font-weight: 900; }
 .weather-strip a { white-space: nowrap; padding: 8px 11px; border-radius: 10px; background: var(--navy-deep); color: white; font-size: 13px; font-weight: 900; text-decoration: none; }
 .mission-log { margin: 15px 0; padding: 12px 16px; border: 2px solid #ebba35; border-radius: 13px; background: #fff0b6; font-size: 15px; font-weight: 800; }
 .story-card h2 { margin: 24px 0 5px; }
@@ -278,6 +279,7 @@ h2 { font-size: 25px; letter-spacing: -.03em; }
 .result h2 { margin: 0 0 9px; }
 .result p { margin: 0 0 13px; font-size: 17px; }
 .result .why { padding: 10px 13px; border-radius: 10px; background: white; font-size: 15px; }
+.weather-result { padding: 10px 13px; border-radius: 10px; background: #ffdb96; color: var(--ink); font-weight: 900; }
 .garden-bonus { padding: 10px 13px; border-radius: 10px; background: #d4f7dc; color: #205a37; font-weight: 900; }
 .result .primary { margin-top: 3px; font-size: 16px; }
 .ending { padding: 65px 0; }

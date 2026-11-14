@@ -8,8 +8,8 @@ const TEXT = {
     resourceChallengeTitle:"Reto oficial", resourceChallengeText:"Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.", resourceChallengeLink:"Leer el reto ↗",
     challengeDays:"días de misión", challengeResources:"recursos vitales",
     resourceDonkiTitle:"Evento solar real · NASA DONKI", resourceDonkiText:"Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.", resourceDonkiLink:"Ver el registro ↗", donkiRecord:"Registro NASA",
-    resourceWeatherTitle:"Boletín reciente · NASA DONKI", resourceWeatherText:"La API de avisos de DONKI aporta el tipo y la fecha que Mayito lee en el día 4. El jugador decide cómo preparar la base.", resourceWeatherLink:"Ver boletín ↗",
-    realDataBadge:"DATO REAL DE NASA", weatherTitle:"Boletín solar de NASA", weatherDisclaimer:"Este dato aparece en el día 4. Observación desde la Tierra; no mide el peligro dentro de la base.", weatherLink:"Abrir registro NASA ↗", weatherSEP:"Partículas solares", weatherCME:"Expulsión solar", weatherFLR:"Fulguración solar", weatherReport:"Informe espacial", weatherOther:"Actividad espacial",
+    resourceWeatherTitle:"Boletines reales · NASA DONKI", resourceWeatherText:"Cada día muestra un registro guardado distinto. En un aviso solar, una acción expuesta puede costar 1 refugio extra según nuestras reglas de simulación.", resourceWeatherLink:"Ver boletín ↗",
+    realDataBadge:"DATO REAL DE NASA", weatherTitle:"Parte de control · día {day}", weatherDisclaimer:"Registro guardado, no pronóstico lunar ni medición de esta base.", weatherRule:"⚠️ Regla del simulador: la acción expuesta cuesta 1 refugio extra hoy.", weatherResult:"Por el simulacro del boletín solar, esta acción también costó 1 punto de refugio.", weatherLink:"Abrir registro NASA ↗", weatherSEP:"Partículas solares", weatherCME:"Expulsión solar", weatherFLR:"Fulguración solar", weatherReport:"Informe espacial", weatherOther:"Boletín {type}",
     weatherDayStory:"Mayito lee el boletín guardado de NASA: {type}, publicado el {date}. Es una observación espacial, no una medida del peligro aquí. Nos recuerda que debemos planear cómo proteger la base. ¿Reforzamos el refugio o seguimos investigando?", weatherDaySource:"Boletín DONKI: {type}, {date}. El evento SEP de 2017 inspira el ejercicio de protección. Los puntos son reglas del juego; ninguno de estos registros mide nuestra base lunar.", weatherRecentLink:"Ver boletín reciente ↗",
     resourceMoonTitle:"El ambiente lunar · NASA", resourceMoonText:"Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.", resourceMoonLink:"Explorar la ciencia ↗",
     resourceLifeTitle:"Soporte vital · NASA", resourceLifeText:"Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.", resourceLifeLink:"Leer sobre soporte vital ↗",
@@ -60,8 +60,8 @@ const TEXT = {
     resourceChallengeTitle:"Official challenge", resourceChallengeText:"Sets the goal: a game for children that shows the trade-offs of running a lunar or Martian base.", resourceChallengeLink:"Read the challenge ↗",
     challengeDays:"mission days", challengeResources:"vital resources",
     resourceDonkiTitle:"Real solar event · NASA DONKI", resourceDonkiText:"We queried the DONKI API and saved a real solar particle event. This record inspires the day 4 alert; points are learning rules.", resourceDonkiLink:"See the record ↗", donkiRecord:"NASA record",
-    resourceWeatherTitle:"Recent bulletin · NASA DONKI", resourceWeatherText:"DONKI's notifications API supplies the type and date Mayito reads on day 4. The player decides how to prepare the base.", resourceWeatherLink:"See bulletin ↗",
-    realDataBadge:"REAL NASA DATA", weatherTitle:"NASA solar bulletin", weatherDisclaimer:"This data appears on day 4. Observed from Earth; it does not measure danger inside the base.", weatherLink:"Open NASA record ↗", weatherSEP:"Solar particles", weatherCME:"Solar eruption", weatherFLR:"Solar flare", weatherReport:"Space report", weatherOther:"Space activity",
+    resourceWeatherTitle:"Real bulletins · NASA DONKI", resourceWeatherText:"Each day shows a different saved record. For solar bulletins, an exposed action may cost 1 extra shelter point under our simulation rules.", resourceWeatherLink:"See bulletin ↗",
+    realDataBadge:"REAL NASA DATA", weatherTitle:"Mission control · day {day}", weatherDisclaimer:"Saved record, not a lunar forecast or measurement of this base.", weatherRule:"⚠️ Simulator rule: the exposed action costs 1 extra shelter point today.", weatherResult:"Because of the solar bulletin drill, this action also cost 1 shelter point.", weatherLink:"Open NASA record ↗", weatherSEP:"Solar particles", weatherCME:"Solar eruption", weatherFLR:"Solar flare", weatherReport:"Space report", weatherOther:"{type} bulletin",
     weatherDayStory:"Mayito reads NASA's saved bulletin: {type}, issued on {date}. It is a space observation, not a measurement of danger here. It reminds us to plan how to protect the base. Should we strengthen the shelter or keep exploring?", weatherDaySource:"Recent DONKI record: {type}, {date}. A 2017 SEP event inspires this protection exercise. The points are game rules; neither record measures our lunar base.", weatherRecentLink:"See recent bulletin ↗",
     resourceMoonTitle:"The lunar environment · NASA", resourceMoonText:"Explains why people on the Moon need protection from space radiation and extreme temperatures.", resourceMoonLink:"Explore the science ↗",
     resourceLifeTitle:"Life support · NASA", resourceLifeText:"Helped us explain why breathable air and recycling are essential for a crew.", resourceLifeLink:"Read about life support ↗",
@@ -263,18 +263,31 @@ function donkiDate() {
   const date = new Date(NASA_EVENT.eventTime);
   return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(date);
 }
+function currentWeather() {
+  const missionOrder = [0, 1, 2, 4, 3, 5, 6];
+  return SPACE_WEATHER_EVENTS[missionOrder[state?.day || 0] % SPACE_WEATHER_EVENTS.length];
+}
+function solarDrill() {
+  return state && [0, 5].includes(state.day) && ["SEP", "CME", "FLR"].includes(currentWeather().type);
+}
+function exposedChoice(choice) {
+  return solarDrill() && ((state.day === 0 && choice === DAYS[0].choices[0]) || (state.day === 5 && choice === DAYS[5].choices[1]));
+}
 function renderWeather() {
-  const typeKey = ["SEP", "CME", "FLR", "Report"].includes(SPACE_WEATHER.type) ? "weather" + SPACE_WEATHER.type : "weatherOther";
-  const date = new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"short", year:"numeric", timeZone:"UTC"}).format(new Date(SPACE_WEATHER.issued));
-  $("weather-details").textContent = label(typeKey) + " · " + date + " · " + SPACE_WEATHER.issued.slice(11, 16) + " UTC";
-  $("weather-link").href = SPACE_WEATHER.link;
-  $("resource-weather-link").href = SPACE_WEATHER.link;
+  const bulletin = currentWeather();
+  const date = new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"short", year:"numeric", timeZone:"UTC"}).format(new Date(bulletin.issued));
+  $("weather-title").textContent = label("weatherTitle").replace("{day}", String((state?.day || 0) + 1));
+  $("weather-details").textContent = weatherType() + " · " + date + " · " + bulletin.issued.slice(11, 16) + " UTC";
+  $("weather-link").href = bulletin.link;
+  $("resource-weather-link").href = SPACE_WEATHER_EVENTS[0].link;
+  $("weather-rule").classList.toggle("hidden", !solarDrill());
 }
 function weatherType() {
-  return label(["SEP", "CME", "FLR", "Report"].includes(SPACE_WEATHER.type) ? "weather" + SPACE_WEATHER.type : "weatherOther");
+  const type = currentWeather().type;
+  return ["SEP", "CME", "FLR", "Report"].includes(type) ? label("weather" + type) : label("weatherOther").replace("{type}", type);
 }
 function weatherDate() {
-  return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(new Date(SPACE_WEATHER.issued));
+  return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(new Date(currentWeather().issued));
 }
 function fillWeatherTemplate(key) {
   return label(key).replace("{type}", weatherType().toLowerCase()).replace("{date}", weatherDate());
@@ -326,6 +339,7 @@ function afterChoice(choice) {
   }
   after.oxygen -= 1;
   after.energy -= 1;
+  if (exposedChoice(choice)) after.shield -= 1;
   if (state.day === 5 && state.garden) after.science += 1;
   return after;
 }
@@ -365,7 +379,7 @@ function renderSource(event) {
   box.append(strong, words, link);
   if (event.nasa) {
     const recent = document.createElement("a");
-    recent.href = SPACE_WEATHER.link;
+    recent.href = currentWeather().link;
     recent.target = "_blank";
     recent.rel = "noopener noreferrer";
     recent.textContent = label("weatherRecentLink");
@@ -454,6 +468,7 @@ function renderDay() {
   renderMissionLog();
   renderSource(event);
   renderResources();
+  renderWeather();
   renderProgress();
   const chosen = state.selected !== null;
   $("choice-area").classList.toggle("hidden", chosen);
@@ -499,6 +514,12 @@ function renderResult() {
   next.textContent = failed() || state.day === DAYS.length - 1 ? label("seeResult") + " →" : label("next") + " →";
   next.addEventListener("click", nextDay);
   box.append(title, message);
+  if (exposedChoice(choice)) {
+    const drill = document.createElement("p");
+    drill.className = "weather-result";
+    drill.textContent = label("weatherResult");
+    box.append(drill);
+  }
   if (state.day === 5 && state.garden) box.append(gardenBonus);
   box.append(why, next);
 }

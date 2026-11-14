@@ -66,13 +66,13 @@ def main():
         print("No se pudo consultar SEP; se conserva el registro anterior.")
 
     try:
-        records = fetch_records("notifications", today - timedelta(days=6), today, key)
+        records = fetch_records("notifications", today - timedelta(days=29), today, key)
         valid = [item for item in records if item.get("messageType") and item.get("messageIssueTime") and item.get("messageURL")]
         if valid:
-            latest = max(valid, key=lambda item: item["messageIssueTime"])
-            data = {"type": latest["messageType"], "issued": latest["messageIssueTime"], "link": latest["messageURL"]}
-            write_snapshot(WEATHER_OUTPUT, "SPACE_WEATHER", data, "Último boletín público guardado de NASA DONKI.")
-            print("Boletín actualizado:", data["type"], data["issued"])
+            latest = sorted(valid, key=lambda item: item["messageIssueTime"], reverse=True)[:7]
+            data = [{"type": item["messageType"], "issued": item["messageIssueTime"], "link": item["messageURL"]} for item in latest]
+            write_snapshot(WEATHER_OUTPUT, "SPACE_WEATHER_EVENTS", data, "Hasta siete boletines públicos guardados de NASA DONKI.")
+            print("Boletines guardados:", len(data))
         else:
             print("Sin boletines recientes; se conserva el anterior.")
         successes += 1

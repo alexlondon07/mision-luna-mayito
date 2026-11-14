@@ -14,7 +14,7 @@ Abre `index.html` en un navegador. No necesita instalar programas, crear una cue
 | `style.css` | Colores, tamaños y dibujos hechos con CSS | Cambiar los colores en `:root` |
 | `game.js` | Traducciones, siete días y decisiones | Cambiar una historia o una opción en `DAYS` |
 | `solar-event.js` | Copia pequeña de un evento real de DONKI | Ver los datos usados en la alerta |
-| `space-weather.js` | Último boletín público guardado de DONKI | Ver fecha, tipo y enlace del dato reciente |
+| `space-weather.js` | Hasta siete boletines públicos guardados de DONKI | Ver qué registro usa cada día |
 | `assets/icons/` | Dibujos originales de aire, energía y refugio | Cambiar el color o las formas de un SVG |
 | `assets/audio/` | Tres clips históricos de NASA | Escuchar los momentos de despegue, radio y aterrizaje |
 | `assets/` | Imágenes de Mayito, su equipo y el logo oficial del reto | Sustituir una imagen conservando su nombre |
@@ -37,7 +37,7 @@ Consultamos la [API DONKI/SEP de NASA](https://api.nasa.gov/) y guardamos en `so
 
 Para actualizar las copias, guarda tu clave en `.env.local` como `NASA_API_KEY=tu_clave` y ejecuta `python3 scripts/update_donki.py`. El script usa la clave solo para la consulta y escribe únicamente datos públicos en `solar-event.js` y `space-weather.js`. Si no hay registros nuevos, conserva los datos ya guardados. `.env.local` está excluido de Git. El juego no consulta la API cuando un niño juega y funciona sin conexión.
 
-El mismo script guarda el último aviso público disponible en `space-weather.js`. Aparece en una franja del juego con su fecha, tipo y enlace, y Mayito lo lee en la historia del día 4. El jugador decide si refuerza el refugio o continúa investigando. Es una observación espacial publicada por NASA, **no** una medición del riesgo dentro de nuestra base lunar. El evento SEP histórico de 2017 explica por qué practicar la protección; el aviso reciente sitúa la misión en un contexto actual. Los puntos y efectos de las opciones siguen siendo reglas creadas por el equipo, no una conversión de la API a unidades físicas. Si la consulta falla, la copia anterior permite seguir jugando.
+El mismo script guarda hasta siete avisos públicos de los últimos 30 días en `space-weather.js`. Cada día de la misión muestra un registro distinto con tipo, fecha y enlace. En los días 1 y 6, si el boletín asignado es solar (SEP, CME o FLR), el simulador cobra **1 punto extra de refugio** por la opción expuesta; ese costo aparece antes de elegir en la vista previa. La alerta del día 4 incluye su boletín guardado y el evento SEP histórico de 2017. Es una regla educativa creada por el equipo, **no** una medida del riesgo dentro de la base lunar ni una conversión científica de la API. Si hay menos de siete avisos, el juego reutiliza los disponibles. Si la consulta falla, la copia anterior permite seguir jugando.
 
 En GitHub, el flujo `.github/workflows/update-donki.yml` consulta DONKI cada día y también puede ejecutarse manualmente. Usa el secreto `NASA_API_KEY` si está configurado en el repositorio; mientras tanto, usa `DEMO_KEY` de NASA. No publica ninguna clave. Si encuentra otro evento, guarda la nueva copia mediante un commit automático.
 
