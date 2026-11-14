@@ -14,6 +14,7 @@ Abre `index.html` en un navegador. No necesita instalar programas, crear una cue
 | `style.css` | Colores, tamaños y dibujos hechos con CSS | Cambiar los colores en `:root` |
 | `game.js` | Traducciones, siete días y decisiones | Cambiar una historia o una opción en `DAYS` |
 | `solar-event.js` | Copia pequeña de un evento real de DONKI | Ver los datos usados en la alerta |
+| `space-weather.js` | Último boletín público guardado de DONKI | Ver fecha, tipo y enlace del dato reciente |
 | `assets/icons/` | Dibujos originales de aire, energía y refugio | Cambiar el color o las formas de un SVG |
 | `assets/audio/` | Tres clips históricos de NASA | Escuchar los momentos de despegue, radio y aterrizaje |
 | `assets/` | Imágenes de Mayito, su equipo y el logo oficial del reto | Sustituir una imagen conservando su nombre |
@@ -34,17 +35,21 @@ El [logotipo de NASA Space Apps Challenge](https://www.spaceappschallenge.org/br
 
 Consultamos la [API DONKI/SEP de NASA](https://api.nasa.gov/) y guardamos en `solar-event.js` la fecha, hora, tipo, instrumento y enlace de un evento real de partículas solares. El juego muestra esos datos en la alerta del día 4. La copia inicial corresponde al [evento del 10 de septiembre de 2017](https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1); si la API ofrece un evento SEP en los últimos 30 días, el actualizador guarda el más reciente. **No** es una medida de radiación dentro de una base lunar ni una predicción para la Luna. El cambio de puntos por reforzar o no el refugio es una simplificación educativa creada para este juego.
 
-Para actualizar la copia, guarda tu clave en `.env.local` como `NASA_API_KEY=tu_clave` y ejecuta `python3 scripts/update_donki.py`. El script usa la clave solo para la consulta y escribe únicamente datos públicos en `solar-event.js`. Si no hay registros nuevos, conserva el evento ya guardado. `.env.local` está excluido de Git. El juego no consulta la API cuando un niño juega y funciona sin conexión.
+Para actualizar las copias, guarda tu clave en `.env.local` como `NASA_API_KEY=tu_clave` y ejecuta `python3 scripts/update_donki.py`. El script usa la clave solo para la consulta y escribe únicamente datos públicos en `solar-event.js` y `space-weather.js`. Si no hay registros nuevos, conserva los datos ya guardados. `.env.local` está excluido de Git. El juego no consulta la API cuando un niño juega y funciona sin conexión.
+
+El mismo script guarda el último aviso público disponible en `space-weather.js`. Aparece en una franja del juego con su fecha, tipo y enlace, y Mayito lo lee en la historia del día 4. El jugador decide si refuerza el refugio o continúa investigando. Es una observación espacial publicada por NASA, **no** una medición del riesgo dentro de nuestra base lunar. El evento SEP histórico de 2017 explica por qué practicar la protección; el aviso reciente sitúa la misión en un contexto actual. Los puntos y efectos de las opciones siguen siendo reglas creadas por el equipo, no una conversión de la API a unidades físicas. Si la consulta falla, la copia anterior permite seguir jugando.
 
 En GitHub, el flujo `.github/workflows/update-donki.yml` consulta DONKI cada día y también puede ejecutarse manualmente. Usa el secreto `NASA_API_KEY` si está configurado en el repositorio; mientras tanto, usa `DEMO_KEY` de NASA. No publica ninguna clave. Si encuentra otro evento, guarda la nueva copia mediante un commit automático.
 
 La [ficha oficial del reto](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details) pide enseñar decisiones reales mediante un prototipo interactivo para niños de 7 a 12 años. Su [pestaña de recursos](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=resources) incluye DONKI.
 
-La sección **Recursos del proyecto** dentro de la página enumera estas fuentes y otras referencias usadas para explicar la protección lunar, el reciclaje de aire y la producción de comida. También identifica qué parte es simulada.
+La sección **Recursos del proyecto** dentro de la página enumera estas fuentes y otras referencias usadas para explicar la protección lunar, el reciclaje de aire, la comunicación Tierra–Luna y la producción de comida. También identifica qué parte es simulada. La paleta visual del juego (azul marino, celeste, naranja y blanco) se inspira en el afiche local `20261113_Programacion NSAC2026.pdf` proporcionado por el equipo.
+
+Las decisiones también dejan huella: si se inicia el huerto en el día 2, las semillas aportan un descubrimiento en el día 6; si se envía un mensaje a la Tierra en el día 3, una recomendación aparece en el día 5. Ambas consecuencias y los cambios de las barras están escritos en español e inglés.
 
 ## Guardar versiones con Git
 
-Git guarda el historial de cambios. Antes de modificar una misión, usa `git status` para ver qué archivos cambiaron. Después de revisar el juego, guarda una versión con `git add .` y `git commit -m "Describe el cambio"`. El repositorio local no tiene remoto configurado.
+Git guarda el historial de cambios. Antes de modificar una misión, usa `git status` para ver qué archivos cambiaron. Después de revisar el juego, guarda una versión con `git add .` y `git commit -m "Describe el cambio"`. El repositorio público es [alexlondon07/mision-luna-mayito](https://github.com/alexlondon07/mision-luna-mayito).
 
 ## Probarlo con otros niños
 

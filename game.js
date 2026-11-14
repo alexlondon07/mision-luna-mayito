@@ -6,12 +6,18 @@ const TEXT = {
     resourcesNav:"Recursos del proyecto", resourcesEyebrow:"DE DÓNDE SALE CADA IDEA", resourcesHeading:"Recursos del proyecto",
     resourcesLead:"Estas fuentes nos ayudaron a crear la historia y explicar las decisiones. Los puntos de las barras son reglas educativas inventadas para el juego.",
     resourceChallengeTitle:"Reto oficial", resourceChallengeText:"Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.", resourceChallengeLink:"Leer el reto ↗",
+    challengeDays:"días de misión", challengeResources:"recursos vitales",
     resourceDonkiTitle:"Evento solar real · NASA DONKI", resourceDonkiText:"Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.", resourceDonkiLink:"Ver el registro ↗", donkiRecord:"Registro NASA",
+    resourceWeatherTitle:"Boletín reciente · NASA DONKI", resourceWeatherText:"La API de avisos de DONKI aporta el tipo y la fecha que Mayito lee en el día 4. El jugador decide cómo preparar la base.", resourceWeatherLink:"Ver boletín ↗",
+    realDataBadge:"DATO REAL DE NASA", weatherTitle:"Boletín solar de NASA", weatherDisclaimer:"Este dato aparece en el día 4. Observación desde la Tierra; no mide el peligro dentro de la base.", weatherLink:"Abrir registro NASA ↗", weatherSEP:"Partículas solares", weatherCME:"Expulsión solar", weatherFLR:"Fulguración solar", weatherReport:"Informe espacial", weatherOther:"Actividad espacial",
+    weatherDayStory:"Mayito lee el boletín guardado de NASA: {type}, publicado el {date}. Es una observación espacial, no una medida del peligro aquí. Nos recuerda que debemos planear cómo proteger la base. ¿Reforzamos el refugio o seguimos investigando?", weatherDaySource:"Boletín DONKI: {type}, {date}. El evento SEP de 2017 inspira el ejercicio de protección. Los puntos son reglas del juego; ninguno de estos registros mide nuestra base lunar.", weatherRecentLink:"Ver boletín reciente ↗",
     resourceMoonTitle:"El ambiente lunar · NASA", resourceMoonText:"Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.", resourceMoonLink:"Explorar la ciencia ↗",
     resourceLifeTitle:"Soporte vital · NASA", resourceLifeText:"Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.", resourceLifeLink:"Leer sobre soporte vital ↗",
     resourceFoodTitle:"Comida espacial · CSA", resourceFoodText:"La guía educativa de la Agencia Espacial Canadiense inspiró la decisión sobre el huerto y las reservas de comida.", resourceFoodLink:"Ver la guía ↗",
     resourceCharactersTitle:"Mayito y sus amigos", resourceCharactersText:"Las ilustraciones de Mayito, Violeta y Rocco vienen de Mi Superpoder es la Programación.", resourceCharactersLink:"Conocer el proyecto ↗",
     resourceAudioTitle:"Voces y radio de NASA", resourceAudioText:"Audios históricos de Apollo 11 y una señal de radio Quindar. Se reproducen en momentos del juego; los efectos cortos son nuestros.", resourceAudioLink:"Escuchar la colección ↗",
+    resourceCommTitle:"Mensajes Tierra–Luna · NASA", resourceCommText:"Una señal directa tarda alrededor de 1,3 segundos por trayecto. En el juego, pedir ayuda a la Tierra usa energía y tiempo de revisión.", resourceCommLink:"Leer la explicación ↗",
+    logReply:"📡 La Tierra revisó nuestro mensaje: recomienda comprobar primero el reciclador de aire.", logNoReply:"📡 Aún no enviamos los datos: hoy debemos decidir sin la recomendación de la Tierra.", logGarden:"🌱 Las semillas del huerto brotaron. La observación sumará 1 descubrimiento hoy.", logNoGarden:"🌱 El huerto quedó pendiente; hoy no tendremos una observación de las semillas.", gardenBonus:"¡Brotaron las semillas! Ganamos 1 descubrimiento por el experimento que iniciamos antes.", commFact:"Una señal directa entre la Tierra y la Luna tarda alrededor de 1,3 segundos por trayecto. Revisar los datos en la Tierra puede tardar más.", commLink:"Explicación NASA ↗",
     sourceDisclaimer:"Proyecto educativo independiente del equipo. Los logotipos y audios se muestran con atribución; NASA no patrocina este juego.",
     soundOn:"Sonido activado", soundOff:"Sin sonido", muteSound:"Silenciar sonidos", unmuteSound:"Activar sonidos", audioIntro:"🎧 La misión incluye audios históricos de NASA en inglés y efectos del juego. Puedes silenciarlos cuando quieras.",
     clipLaunch:"Audio NASA · despegue de Apollo 11 (inglés)", clipRadio:"Audio NASA · señal de radio Quindar", clipLanded:"Audio NASA · aterrizaje del Apollo 11 (inglés)",
@@ -36,8 +42,8 @@ const TEXT = {
     cost:"Costo", danger:"¡Cuidado! Un recurso llegaría a cero.",
     whatHappened:"¿Qué pasó?", learnWhy:"Aprendiste que...",
     next:"Ir al día siguiente", seeResult:"Ver resultado",
-    sourceLead:"Dato real de NASA", sourceBody:"DONKI registró partículas solares el {date} a las {time} UTC. Este evento inspira la alerta del juego. Los puntos de refugio son reglas educativas, no una medición lunar.",
-    sourceLink:"Ver registro DONKI ↗", missionEnd:"FIN DE LA MISIÓN",
+    sourceLead:"Datos reales de NASA", sourceBody:"DONKI registró partículas solares el {date} a las {time} UTC. Este evento inspira la alerta del juego. Los puntos de refugio son reglas educativas, no una medición lunar.",
+    sourceLink:"Ver evento SEP de 2017 ↗", missionEnd:"FIN DE LA MISIÓN",
     winTitle:"¡Misión cumplida, equipo!", winText:"Mayito y sus amigos completaron los 7 días. Descubrimientos: ",
     loseTitle:"¡Mayito quiere intentarlo otra vez!", loseText:"La misión terminó en el día ",
     because:" porque ", reasonOxygen:"se acabó el aire", reasonEnergy:"se agotó la energía", reasonShield:"el refugio quedó sin protección",
@@ -52,12 +58,18 @@ const TEXT = {
     resourcesNav:"Project resources", resourcesEyebrow:"WHERE EACH IDEA CAME FROM", resourcesHeading:"Project resources",
     resourcesLead:"These sources helped us write the story and explain each decision. The bars use learning rules created for this game, not real measurements.",
     resourceChallengeTitle:"Official challenge", resourceChallengeText:"Sets the goal: a game for children that shows the trade-offs of running a lunar or Martian base.", resourceChallengeLink:"Read the challenge ↗",
+    challengeDays:"mission days", challengeResources:"vital resources",
     resourceDonkiTitle:"Real solar event · NASA DONKI", resourceDonkiText:"We queried the DONKI API and saved a real solar particle event. This record inspires the day 4 alert; points are learning rules.", resourceDonkiLink:"See the record ↗", donkiRecord:"NASA record",
+    resourceWeatherTitle:"Recent bulletin · NASA DONKI", resourceWeatherText:"DONKI's notifications API supplies the type and date Mayito reads on day 4. The player decides how to prepare the base.", resourceWeatherLink:"See bulletin ↗",
+    realDataBadge:"REAL NASA DATA", weatherTitle:"NASA solar bulletin", weatherDisclaimer:"This data appears on day 4. Observed from Earth; it does not measure danger inside the base.", weatherLink:"Open NASA record ↗", weatherSEP:"Solar particles", weatherCME:"Solar eruption", weatherFLR:"Solar flare", weatherReport:"Space report", weatherOther:"Space activity",
+    weatherDayStory:"Mayito reads NASA's saved bulletin: {type}, issued on {date}. It is a space observation, not a measurement of danger here. It reminds us to plan how to protect the base. Should we strengthen the shelter or keep exploring?", weatherDaySource:"Recent DONKI record: {type}, {date}. A 2017 SEP event inspires this protection exercise. The points are game rules; neither record measures our lunar base.", weatherRecentLink:"See recent bulletin ↗",
     resourceMoonTitle:"The lunar environment · NASA", resourceMoonText:"Explains why people on the Moon need protection from space radiation and extreme temperatures.", resourceMoonLink:"Explore the science ↗",
     resourceLifeTitle:"Life support · NASA", resourceLifeText:"Helped us explain why breathable air and recycling are essential for a crew.", resourceLifeLink:"Read about life support ↗",
     resourceFoodTitle:"Food in space · CSA", resourceFoodText:"The Canadian Space Agency's educational toolkit inspired the garden and stored-food choice.", resourceFoodLink:"See the toolkit ↗",
     resourceCharactersTitle:"Mayito and friends", resourceCharactersText:"Illustrations of Mayito, Violeta, and Rocco come from Mi Superpoder es la Programación.", resourceCharactersLink:"Meet the project ↗",
     resourceAudioTitle:"NASA voices and radio", resourceAudioText:"Historic Apollo 11 audio and a Quindar radio tone play during the game; we made the short game effects.", resourceAudioLink:"Hear NASA's collection ↗",
+    resourceCommTitle:"Earth–Moon messages · NASA", resourceCommText:"A direct signal takes about 1.3 seconds each way. In the game, asking Earth for help uses power and review time.", resourceCommLink:"Read the explanation ↗",
+    logReply:"📡 Earth reviewed our message: check the air recycler first.", logNoReply:"📡 We have not sent the data, so we must decide without Earth's recommendation today.", logGarden:"🌱 The garden seeds sprouted. The observation will add 1 discovery today.", logNoGarden:"🌱 The garden was postponed; we have no seed observation today.", gardenBonus:"The seeds sprouted! We earned 1 discovery from the experiment started earlier.", commFact:"A direct signal between Earth and the Moon takes about 1.3 seconds each way. Reviewing data on Earth can take longer.", commLink:"NASA explanation ↗",
     sourceDisclaimer:"An independent educational team project. Logos and audio are credited; NASA does not sponsor this game.",
     soundOn:"Sound on", soundOff:"Sound off", muteSound:"Mute sounds", unmuteSound:"Turn on sounds", audioIntro:"🎧 This mission includes historic NASA audio in English and game effects. You can mute them at any time.",
     clipLaunch:"NASA audio · Apollo 11 liftoff", clipRadio:"NASA audio · Quindar radio tone", clipLanded:"NASA audio · Apollo 11 landing",
@@ -83,7 +95,7 @@ const TEXT = {
     whatHappened:"What happened?", learnWhy:"You learned that...",
     next:"Go to the next day", seeResult:"See result",
     sourceLead:"Real NASA data", sourceBody:"DONKI recorded solar particles on {date} at {time} UTC. This event inspires the game alert. Shelter points are learning rules, not a lunar measurement.",
-    sourceLink:"See the DONKI record ↗", missionEnd:"END OF MISSION",
+    sourceLink:"See 2017 SEP event ↗", missionEnd:"END OF MISSION",
     winTitle:"Mission complete, team!", winText:"Mayito and friends completed all 7 days. Discoveries: ",
     loseTitle:"Mayito wants to try again!", loseText:"The mission ended on day ",
     because:" because ", reasonOxygen:"the base ran out of air", reasonEnergy:"the base ran out of power", reasonShield:"the shelter lost its protection",
@@ -115,11 +127,11 @@ const DAYS = [
     ]
   },
   {
-    icon:"📡",
+    icon:"📡", communication:true,
     title:{es:"Un mensaje para la Tierra",en:"A message to Earth"},
     story:{es:"Rocco quiere contarle a la Tierra lo que aprendimos. La radio usa energía y la respuesta tarda un poquito. ¿Enviamos el mensaje ahora?",en:"Rocco wants to tell Earth what we learned. The radio uses power, and the reply takes a little time. Should we send the message now?"},
     choices:[
-      {title:{es:"Enviar el mensaje",en:"Send the message"},detail:{es:"Compartimos los resultados con la Tierra.",en:"Share our results with Earth."},change:{energy:-2,science:1},result:{es:"¡Mensaje enviado! Esperaremos un momento para recibir la respuesta.",en:"Message sent! We must wait a moment for the reply."},why:{es:"Las señales de radio no viajan de forma instantánea y los equipos necesitan energía.",en:"Radio signals do not travel instantly, and the equipment needs power."}},
+      {title:{es:"Enviar el mensaje",en:"Send the message"},detail:{es:"Compartimos los resultados con la Tierra.",en:"Share our results with Earth."},change:{energy:-2,science:1},result:{es:"¡Mensaje enviado! La señal llegó en segundos; la Tierra revisará nuestros datos.",en:"Message sent! The signal arrived in seconds; Earth will review our data."},why:{es:"La radio necesita energía. La señal tarda segundos; revisar los datos lleva más tiempo.",en:"The radio needs power. The signal takes seconds; reviewing data takes longer."}},
       {title:{es:"Cargar baterías primero",en:"Charge batteries first"},detail:{es:"La Tierra esperará nuestros resultados.",en:"Earth will wait for our results."},change:{energy:3},cost:{es:"Mensaje retrasado",en:"Delayed message"},result:{es:"Tenemos más energía, pero la Tierra aún no conoce los resultados.",en:"We have more power, but Earth does not know the results yet."},why:{es:"Ahorrar energía puede retrasar una tarea importante de la misión.",en:"Saving power can delay an important mission task."}}
     ]
   },
@@ -162,6 +174,7 @@ const DAYS = [
 ];
 
 const NASA_URL = NASA_EVENT.link;
+const NASA_COMM_URL = "https://www.nasa.gov/podcasts/nasa-in-silicon-valley/nasa-in-silicon-valley-live-episode-01-were-going-back-to-the-moon/";
 // Cada pareja corresponde a las dos opciones de un día.
 const CHOICE_ICONS = [
   ["⚡", "🫧"], ["🌱", "🥫"], ["📡", "🔋"], ["🛡️", "🔭"],
@@ -250,6 +263,22 @@ function donkiDate() {
   const date = new Date(NASA_EVENT.eventTime);
   return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(date);
 }
+function renderWeather() {
+  const typeKey = ["SEP", "CME", "FLR", "Report"].includes(SPACE_WEATHER.type) ? "weather" + SPACE_WEATHER.type : "weatherOther";
+  const date = new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"short", year:"numeric", timeZone:"UTC"}).format(new Date(SPACE_WEATHER.issued));
+  $("weather-details").textContent = label(typeKey) + " · " + date + " · " + SPACE_WEATHER.issued.slice(11, 16) + " UTC";
+  $("weather-link").href = SPACE_WEATHER.link;
+  $("resource-weather-link").href = SPACE_WEATHER.link;
+}
+function weatherType() {
+  return label(["SEP", "CME", "FLR", "Report"].includes(SPACE_WEATHER.type) ? "weather" + SPACE_WEATHER.type : "weatherOther");
+}
+function weatherDate() {
+  return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(new Date(SPACE_WEATHER.issued));
+}
+function fillWeatherTemplate(key) {
+  return label(key).replace("{type}", weatherType().toLowerCase()).replace("{date}", weatherDate());
+}
 function renderDonkiCard() {
   const time = NASA_EVENT.eventTime.slice(11, 16);
   $("donki-record").textContent = label("donkiRecord") + ": SEP · " + donkiDate() + " · " + time + " UTC";
@@ -268,6 +297,7 @@ function setLanguage(nextLanguage) {
   updateSoundButton();
   if (currentClip) $("audio-caption").textContent = "🎙️ " + label(AUDIO_CLIPS[currentClip].caption);
   renderDonkiCard();
+  renderWeather();
   $("lang-es").setAttribute("aria-pressed", language === "es");
   $("lang-en").setAttribute("aria-pressed", language === "en");
   $("progress").setAttribute("aria-label", language === "es" ? "Progreso de la misión" : "Mission progress");
@@ -278,7 +308,7 @@ function setLanguage(nextLanguage) {
   }
 }
 function startGame() {
-  state = {day:0, oxygen:8, energy:8, shield:4, science:0, selected:null, ended:false};
+  state = {day:0, oxygen:8, energy:8, shield:4, science:0, garden:false, sentMessage:false, selected:null, ended:false};
   show("play");
   renderDay();
   playNASA("launch");
@@ -296,6 +326,7 @@ function afterChoice(choice) {
   }
   after.oxygen -= 1;
   after.energy -= 1;
+  if (state.day === 5 && state.garden) after.science += 1;
   return after;
 }
 function renderResources() {
@@ -319,18 +350,34 @@ function renderProgress() {
 }
 function renderSource(event) {
   const box = $("event-source");
-  box.classList.toggle("hidden", !event.nasa);
+  box.classList.toggle("hidden", !event.nasa && !event.communication);
   box.replaceChildren();
-  if (!event.nasa) return;
+  if (!event.nasa && !event.communication) return;
   const strong = document.createElement("strong");
-  strong.textContent = label("sourceLead") + ": ";
-  const words = document.createTextNode(label("sourceBody").replace("{date}", donkiDate()).replace("{time}", NASA_EVENT.eventTime.slice(11, 16)) + " ");
+  strong.textContent = label(event.nasa ? "sourceLead" : "resourceCommTitle") + ": ";
+  const body = event.nasa ? fillWeatherTemplate("weatherDaySource") : label("commFact");
+  const words = document.createTextNode(body + " ");
   const link = document.createElement("a");
-  link.href = NASA_URL;
+  link.href = event.nasa ? NASA_URL : NASA_COMM_URL;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
-  link.textContent = label("sourceLink");
+  link.textContent = label(event.nasa ? "sourceLink" : "commLink");
   box.append(strong, words, link);
+  if (event.nasa) {
+    const recent = document.createElement("a");
+    recent.href = SPACE_WEATHER.link;
+    recent.target = "_blank";
+    recent.rel = "noopener noreferrer";
+    recent.textContent = label("weatherRecentLink");
+    recent.style.marginLeft = "10px";
+    box.append(recent);
+  }
+}
+function renderMissionLog() {
+  const box = $("mission-log");
+  const key = state.day === 4 ? state.sentMessage ? "logReply" : "logNoReply" : state.day === 5 ? state.garden ? "logGarden" : "logNoGarden" : null;
+  box.classList.toggle("hidden", !key);
+  box.textContent = key ? label(key) : "";
 }
 function resourceName(key) {
   return label(key + "Name");
@@ -376,10 +423,10 @@ function renderChoices(event) {
       chip.append(icon, values);
       preview.append(chip);
     }
-    if (choice.change.science) {
+    if (forecast.science > state.science) {
       const discovery = document.createElement("span");
       discovery.className = "preview-chip discovery";
-      discovery.textContent = "⭐ +1 " + label("discoveries");
+      discovery.textContent = "⭐ +" + (forecast.science - state.science) + " " + label("discoveries");
       preview.append(discovery);
     }
     button.append(heading, detail, preview);
@@ -403,7 +450,8 @@ function renderDay() {
   const event = DAYS[state.day];
   $("day-label").textContent = label("day") + " " + (state.day + 1) + " " + label("of") + " " + DAYS.length;
   $("event-title").textContent = translate(event.title);
-  $("event-story").textContent = translate(event.story);
+  $("event-story").textContent = event.nasa ? fillWeatherTemplate("weatherDayStory") : translate(event.story);
+  renderMissionLog();
   renderSource(event);
   renderResources();
   renderProgress();
@@ -416,12 +464,15 @@ function renderDay() {
 function choose(index) {
   const choice = DAYS[state.day].choices[index];
   const after = afterChoice(choice);
+  const gainedScience = after.science > state.science;
+  if (state.day === 1 && index === 0) state.garden = true;
+  if (state.day === 2 && index === 0) state.sentMessage = true;
   state.oxygen = after.oxygen;
   state.energy = after.energy;
   state.shield = after.shield;
   state.science = after.science;
   state.selected = index;
-  playEffect(failed() ? "warning" : choice.change.science ? "discovery" : "choice");
+  playEffect(failed() ? "warning" : gainedScience ? "discovery" : "choice");
   renderDay();
   $("result").scrollIntoView({behavior:"smooth", block:"nearest"});
 }
@@ -439,12 +490,17 @@ function renderResult() {
   const why = document.createElement("p");
   why.className = "why";
   why.textContent = label("learnWhy") + " " + translate(choice.why);
+  const gardenBonus = document.createElement("p");
+  gardenBonus.className = "garden-bonus";
+  gardenBonus.textContent = label("gardenBonus");
   const next = document.createElement("button");
   next.className = "primary";
   next.type = "button";
   next.textContent = failed() || state.day === DAYS.length - 1 ? label("seeResult") + " →" : label("next") + " →";
   next.addEventListener("click", nextDay);
-  box.append(title, message, why, next);
+  box.append(title, message);
+  if (state.day === 5 && state.garden) box.append(gardenBonus);
+  box.append(why, next);
 }
 function nextDay() {
   if (failed() || state.day === DAYS.length - 1) {

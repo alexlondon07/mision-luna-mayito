@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#451471">
+  <meta name="theme-color" content="#06162b">
   <link rel="icon" type="image/svg+xml" href="assets/icons/mission.svg">
   <title>Misión Luna con Mayito</title>
   <link rel="stylesheet" href="style.css">
   <script src="solar-event.js" defer></script>
+  <script src="space-weather.js" defer></script>
   <script src="game.js" defer></script>
 </head>
 <body>
@@ -51,6 +52,7 @@
         <div class="play-top"><div><p class="eyebrow" id="day-label"></p><h1 id="event-title"></h1></div><button id="restart" class="restart" type="button" data-i18n="restart">Empezar de nuevo</button></div>
         <div id="progress" class="progress" aria-label="Progreso de la misión"></div>
         <p class="mission-goal" data-i18n="missionGoal">🎯 Meta: llegar al día 7 con aire, energía y refugio por encima de cero.</p>
+        <div class="weather-strip"><span class="weather-orbit" aria-hidden="true">☀️</span><div><span class="data-badge" data-i18n="realDataBadge">DATO REAL DE NASA</span><strong data-i18n="weatherTitle">Boletín solar de NASA</strong><p id="weather-details"></p><small data-i18n="weatherDisclaimer">Observación desde la Tierra; no mide el peligro dentro de esta base lunar.</small></div><a id="weather-link" href="https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49532/1" target="_blank" rel="noopener noreferrer" data-i18n="weatherLink">Abrir registro NASA ↗</a></div>
         <div class="game-grid">
           <aside class="status-card" aria-label="Recursos de la base">
             <h2 data-i18n="resourcesTitle">Recursos de la base</h2>
@@ -63,6 +65,7 @@
           </aside>
           <div class="story-card">
             <div class="narrator"><img src="assets/mayito.webp" alt="" class="narrator-image"><div class="speech"><span class="speech-label" data-i18n="mayitoSays">MAYITO DICE</span><p id="event-story"></p></div></div>
+            <div id="mission-log" class="mission-log hidden"></div>
             <div id="event-source" class="source-note hidden"></div>
             <div id="choice-area"><h2 data-i18n="chooseTitle">¿Qué harías tú?</h2><p class="choice-help" data-i18n="choiceHelp">Mira cómo quedaría la base al final del día.</p><div id="choices" class="choices"></div></div>
             <div id="result" class="result hidden"></div>
@@ -77,13 +80,15 @@
         <h2 id="resources-heading" data-i18n="resourcesHeading">Recursos del proyecto</h2>
         <p class="resources-lead" data-i18n="resourcesLead">Estas fuentes nos ayudaron a crear la historia y explicar las decisiones. Los puntos de las barras son reglas educativas inventadas para el juego.</p>
         <div class="resource-list">
-          <article class="resource-card"><img class="space-apps-logo" src="assets/space-apps-logo.png" alt="NASA Space Apps Challenge"><h3 data-i18n="resourceChallengeTitle">Reto oficial</h3><p data-i18n="resourceChallengeText">Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.</p><a href="https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details" target="_blank" rel="noopener noreferrer" data-i18n="resourceChallengeLink">Leer el reto ↗</a></article>
-          <article class="resource-card"><span aria-hidden="true">☀️</span><h3 data-i18n="resourceDonkiTitle">Evento solar real · NASA DONKI</h3><p data-i18n="resourceDonkiText">Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.</p><p id="donki-record" class="donki-record"></p><a id="donki-record-link" href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1" target="_blank" rel="noopener noreferrer" data-i18n="resourceDonkiLink">Ver el registro ↗</a></article>
+          <article class="resource-card challenge-card"><div><img class="space-apps-logo" src="assets/space-apps-logo.png" alt="NASA Space Apps Challenge"><h3 data-i18n="resourceChallengeTitle">Reto oficial</h3><p data-i18n="resourceChallengeText">Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.</p><a href="https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details" target="_blank" rel="noopener noreferrer" data-i18n="resourceChallengeLink">Leer el reto ↗</a></div><div class="challenge-stats" aria-hidden="true"><span><b>7</b><small data-i18n="challengeDays">días de misión</small></span><span><b>3</b><small data-i18n="challengeResources">recursos vitales</small></span></div></article>
+          <article class="resource-card data-card"><span aria-hidden="true">☀️</span><h3 data-i18n="resourceDonkiTitle">Evento solar real · NASA DONKI</h3><p data-i18n="resourceDonkiText">Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.</p><p id="donki-record" class="donki-record"></p><a id="donki-record-link" href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1" target="_blank" rel="noopener noreferrer" data-i18n="resourceDonkiLink">Ver el registro ↗</a></article>
+          <article class="resource-card weather-card"><span aria-hidden="true">📡</span><h3 data-i18n="resourceWeatherTitle">Boletín reciente · NASA DONKI</h3><p data-i18n="resourceWeatherText">La API de avisos de DONKI aporta el tipo y la fecha que Mayito lee en el día 4. El jugador decide cómo preparar la base.</p><a id="resource-weather-link" href="https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49532/1" target="_blank" rel="noopener noreferrer" data-i18n="resourceWeatherLink">Ver boletín ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🛡️</span><h3 data-i18n="resourceMoonTitle">El ambiente lunar · NASA</h3><p data-i18n="resourceMoonText">Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.</p><a href="https://science.nasa.gov/moon/weather-on-the-moon/" target="_blank" rel="noopener noreferrer" data-i18n="resourceMoonLink">Explorar la ciencia ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🫧</span><h3 data-i18n="resourceLifeTitle">Soporte vital · NASA</h3><p data-i18n="resourceLifeText">Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.</p><a href="https://www.nasa.gov/humans-in-space/deep-space-habitation-overview/" target="_blank" rel="noopener noreferrer" data-i18n="resourceLifeLink">Leer sobre soporte vital ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🌱</span><h3 data-i18n="resourceFoodTitle">Comida espacial · CSA</h3><p data-i18n="resourceFoodText">La guía educativa de la Agencia Espacial Canadiense inspiró la decisión sobre el huerto y las reservas de comida.</p><a href="https://www.asc-csa.gc.ca/eng/youth-educators/toolkits/food-production/" target="_blank" rel="noopener noreferrer" data-i18n="resourceFoodLink">Ver la guía ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🐰</span><h3 data-i18n="resourceCharactersTitle">Mayito y sus amigos</h3><p data-i18n="resourceCharactersText">Las ilustraciones de Mayito, Violeta y Rocco vienen de Mi Superpoder es la Programación.</p><a href="https://misuperpodereslaprogramacion.com/" target="_blank" rel="noopener noreferrer" data-i18n="resourceCharactersLink">Conocer el proyecto ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🎙️</span><h3 data-i18n="resourceAudioTitle">Voces y radio de NASA</h3><p data-i18n="resourceAudioText">Audios históricos de Apollo 11 y una señal de radio Quindar. Se reproducen en momentos del juego; los efectos cortos son nuestros.</p><a href="https://www.nasa.gov/historical-sounds/" target="_blank" rel="noopener noreferrer" data-i18n="resourceAudioLink">Escuchar la colección ↗</a></article>
+          <article class="resource-card comm-card"><span aria-hidden="true">📡</span><h3 data-i18n="resourceCommTitle">Mensajes Tierra–Luna · NASA</h3><p data-i18n="resourceCommText">Una señal directa tarda alrededor de 1,3 segundos por trayecto. En el juego, pedir ayuda a la Tierra usa energía y tiempo de revisión.</p><a href="https://www.nasa.gov/podcasts/nasa-in-silicon-valley/nasa-in-silicon-valley-live-episode-01-were-going-back-to-the-moon/" target="_blank" rel="noopener noreferrer" data-i18n="resourceCommLink">Leer la explicación ↗</a></article>
         </div>
         <p class="build-note" data-i18n="buildNote">🧩 Hecho con HTML, CSS y JavaScript. Usamos Git para guardar las versiones del proyecto.</p>
         <p class="source-disclaimer" data-i18n="sourceDisclaimer">Proyecto educativo independiente del equipo. Los logotipos y audios se muestran con atribución; NASA no patrocina este juego.</p>

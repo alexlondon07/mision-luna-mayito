@@ -22,10 +22,10 @@ jobs:
         run: python3 scripts/update_donki.py
       - name: Guardar dato público si cambió
         run: |
-          if ! git diff --quiet -- solar-event.js; then
+          if ! git diff --quiet -- solar-event.js space-weather.js; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add solar-event.js
+            git add solar-event.js space-weather.js
             git commit -m "Update NASA DONKI solar event"
             git push
           fi
