@@ -11,6 +11,10 @@ const TEXT = {
     resourceLifeTitle:"Soporte vital · NASA", resourceLifeText:"Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.", resourceLifeLink:"Leer sobre soporte vital ↗",
     resourceFoodTitle:"Comida espacial · CSA", resourceFoodText:"La guía educativa de la Agencia Espacial Canadiense inspiró la decisión sobre el huerto y las reservas de comida.", resourceFoodLink:"Ver la guía ↗",
     resourceCharactersTitle:"Mayito y sus amigos", resourceCharactersText:"Las ilustraciones de Mayito, Violeta y Rocco vienen de Mi Superpoder es la Programación.", resourceCharactersLink:"Conocer el proyecto ↗",
+    resourceAudioTitle:"Voces y radio de NASA", resourceAudioText:"Audios históricos de Apollo 11 y una señal de radio Quindar. Se reproducen en momentos del juego; los efectos cortos son nuestros.", resourceAudioLink:"Escuchar la colección ↗",
+    sourceDisclaimer:"Proyecto educativo independiente del equipo. Los logotipos y audios se muestran con atribución; NASA no patrocina este juego.",
+    soundOn:"Sonido activado", soundOff:"Sin sonido", muteSound:"Silenciar sonidos", unmuteSound:"Activar sonidos", audioIntro:"🎧 La misión incluye audios históricos de NASA en inglés y efectos del juego. Puedes silenciarlos cuando quieras.",
+    clipLaunch:"Audio NASA · despegue de Apollo 11 (inglés)", clipRadio:"Audio NASA · señal de radio Quindar", clipLanded:"Audio NASA · aterrizaje del Apollo 11 (inglés)",
     buildNote:"🧩 Hecho con HTML, CSS y JavaScript. Usamos Git para guardar las versiones del proyecto.",
     introBadge:"7 días · 1 misión", introEyebrow:"UNA AVENTURA PARA DECIDIR",
     introTitle:"¡Mayito necesita tu ayuda en la Luna!",
@@ -39,6 +43,7 @@ const TEXT = {
     because:" porque ", reasonOxygen:"se acabó el aire", reasonEnergy:"se agotó la energía", reasonShield:"el refugio quedó sin protección",
     winLearning:"¡Buen trabajo! Una base necesita equilibrio: la mejor decisión cambia según lo que falta.",
     loseLearning:"Probemos otra estrategia. Mira las barras antes de elegir y recuerda el consumo de cada día.",
+    badgeGuardian:"Insignia: Guardianes de la base", badgeExplorer:"Insignia: Exploradores lunares", badgeScientist:"Insignia: Equipo científico", badgeTryAgain:"Entrenamiento de misión: ¡inténtalo de nuevo!",
     again:"¡Jugar otra vez!", footerNote:"Los puntos son reglas educativas, no medidas reales de una base lunar.",
     charactersSource:"Personajes: Mi Superpoder es la Programación ↗", nasaSource:"Evento solar: NASA DONKI ↗"
   },
@@ -52,6 +57,10 @@ const TEXT = {
     resourceLifeTitle:"Life support · NASA", resourceLifeText:"Helped us explain why breathable air and recycling are essential for a crew.", resourceLifeLink:"Read about life support ↗",
     resourceFoodTitle:"Food in space · CSA", resourceFoodText:"The Canadian Space Agency's educational toolkit inspired the garden and stored-food choice.", resourceFoodLink:"See the toolkit ↗",
     resourceCharactersTitle:"Mayito and friends", resourceCharactersText:"Illustrations of Mayito, Violeta, and Rocco come from Mi Superpoder es la Programación.", resourceCharactersLink:"Meet the project ↗",
+    resourceAudioTitle:"NASA voices and radio", resourceAudioText:"Historic Apollo 11 audio and a Quindar radio tone play during the game; we made the short game effects.", resourceAudioLink:"Hear NASA's collection ↗",
+    sourceDisclaimer:"An independent educational team project. Logos and audio are credited; NASA does not sponsor this game.",
+    soundOn:"Sound on", soundOff:"Sound off", muteSound:"Mute sounds", unmuteSound:"Turn on sounds", audioIntro:"🎧 This mission includes historic NASA audio in English and game effects. You can mute them at any time.",
+    clipLaunch:"NASA audio · Apollo 11 liftoff", clipRadio:"NASA audio · Quindar radio tone", clipLanded:"NASA audio · Apollo 11 landing",
     buildNote:"🧩 Built with HTML, CSS, and JavaScript. We use Git to save project versions.",
     introBadge:"7 days · 1 mission", introEyebrow:"AN ADVENTURE IN DECISION MAKING",
     introTitle:"Mayito needs your help on the Moon!",
@@ -80,6 +89,7 @@ const TEXT = {
     because:" because ", reasonOxygen:"the base ran out of air", reasonEnergy:"the base ran out of power", reasonShield:"the shelter lost its protection",
     winLearning:"Great work! A base needs balance. The best choice changes with what the team needs.",
     loseLearning:"Let's try another strategy. Check the bars before choosing, and remember each day's consumption.",
+    badgeGuardian:"Badge: Base guardians", badgeExplorer:"Badge: Lunar explorers", badgeScientist:"Badge: Science crew", badgeTryAgain:"Mission training: try again!",
     again:"Play again!", footerNote:"Points are learning rules, not real measurements of a lunar base.",
     charactersSource:"Characters: Mi Superpoder es la Programación ↗", nasaSource:"Solar event: NASA DONKI ↗"
   }
@@ -157,16 +167,84 @@ const CHOICE_ICONS = [
   ["⚡", "🫧"], ["🌱", "🥫"], ["📡", "🔋"], ["🛡️", "🔭"],
   ["🫧", "⚡"], ["🛡️", "🔭"], ["🔬", "🫧"]
 ];
-const RESOURCE_ICONS = {oxygen:"🫧", energy:"⚡", shield:"🛡️"};
+const RESOURCE_ICONS = {oxygen:"assets/icons/air.svg", energy:"assets/icons/energy.svg", shield:"assets/icons/shelter.svg"};
 const $ = id => document.getElementById(id);
 let language = "es";
 let state = null;
+let soundEnabled = true;
+let currentAudio = null;
+let currentClip = null;
+let audioContext = null;
+let captionTimer = null;
+let radioTimer = null;
+
+const AUDIO_CLIPS = {
+  launch:{file:"assets/audio/apollo11-liftoff.mp3", caption:"clipLaunch"},
+  radio:{file:"assets/audio/quindar.mp3", caption:"clipRadio"},
+  landed:{file:"assets/audio/apollo11-landed.mp3", caption:"clipLanded"}
+};
 
 function translate(value) {
   return typeof value === "string" ? value : value[language];
 }
 function label(key) {
   return TEXT[language][key];
+}
+function updateSoundButton() {
+  const button = $("sound-toggle");
+  button.setAttribute("aria-pressed", String(soundEnabled));
+  button.setAttribute("aria-label", label(soundEnabled ? "muteSound" : "unmuteSound"));
+  button.firstChild.textContent = soundEnabled ? "🔊 " : "🔇 ";
+  button.querySelector("span").textContent = label(soundEnabled ? "soundOn" : "soundOff");
+}
+function stopAudio() {
+  clearTimeout(radioTimer);
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+  currentClip = null;
+  clearTimeout(captionTimer);
+  $("audio-caption").classList.add("hidden");
+}
+function playNASA(name) {
+  if (!soundEnabled) return;
+  stopAudio();
+  const clip = AUDIO_CLIPS[name];
+  const audio = new Audio(clip.file);
+  audio.volume = name === "radio" ? 0.35 : 0.55;
+  currentAudio = audio;
+  currentClip = name;
+  const caption = $("audio-caption");
+  caption.textContent = "🎙️ " + label(clip.caption);
+  caption.classList.remove("hidden");
+  captionTimer = setTimeout(() => caption.classList.add("hidden"), 5000);
+  if (name === "radio") radioTimer = setTimeout(() => { audio.pause(); if (currentAudio === audio) { currentAudio = null; currentClip = null; } }, 2200);
+  audio.addEventListener("ended", () => { if (currentAudio === audio) { currentAudio = null; currentClip = null; } });
+  audio.play().catch(() => { if (currentAudio === audio) stopAudio(); });
+}
+function playEffect(kind) {
+  if (!soundEnabled) return;
+  try {
+    audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+    if (audioContext.state === "suspended") audioContext.resume();
+    const now = audioContext.currentTime;
+    const notes = kind === "warning" ? [420, 310] : kind === "discovery" ? [500, 660, 850] : [520, 690];
+    notes.forEach((frequency, index) => {
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const start = now + index * 0.12;
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.09, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.16);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start(start);
+      oscillator.stop(start + 0.17);
+    });
+  } catch (_) { /* El juego funciona aunque el navegador no ofrezca audio. */ }
 }
 function donkiDate() {
   const date = new Date(NASA_EVENT.eventTime);
@@ -187,6 +265,8 @@ function setLanguage(nextLanguage) {
   for (const element of document.querySelectorAll("[data-i18n]")) {
     element.textContent = label(element.dataset.i18n);
   }
+  updateSoundButton();
+  if (currentClip) $("audio-caption").textContent = "🎙️ " + label(AUDIO_CLIPS[currentClip].caption);
   renderDonkiCard();
   $("lang-es").setAttribute("aria-pressed", language === "es");
   $("lang-en").setAttribute("aria-pressed", language === "en");
@@ -201,6 +281,7 @@ function startGame() {
   state = {day:0, oxygen:8, energy:8, shield:4, science:0, selected:null, ended:false};
   show("play");
   renderDay();
+  playNASA("launch");
   window.scrollTo(0, 0);
 }
 function afterChoice(choice) {
@@ -285,10 +366,11 @@ function renderChoices(event) {
       if (forecast[key] === state[key]) continue;
       const chip = document.createElement("span");
       chip.className = "preview-chip " + key + (forecast[key] <= 0 ? " danger" : forecast[key] > state[key] ? " up" : " down");
-      const icon = document.createElement("span");
+      const icon = document.createElement("img");
       icon.className = "preview-icon";
       icon.setAttribute("aria-hidden", "true");
-      icon.textContent = RESOURCE_ICONS[key];
+      icon.src = RESOURCE_ICONS[key];
+      icon.alt = "";
       const values = document.createElement("span");
       values.textContent = resourceName(key) + " " + state[key] + "→" + Math.max(0, forecast[key]);
       chip.append(icon, values);
@@ -339,6 +421,7 @@ function choose(index) {
   state.shield = after.shield;
   state.science = after.science;
   state.selected = index;
+  playEffect(failed() ? "warning" : choice.change.science ? "discovery" : "choice");
   renderDay();
   $("result").scrollIntoView({behavior:"smooth", block:"nearest"});
 }
@@ -368,15 +451,22 @@ function nextDay() {
     state.ended = true;
     show("ending");
     renderEnding();
+    if (failed()) { stopAudio(); playEffect("warning"); }
+    else playNASA("landed");
   } else {
     state.day += 1;
     state.selected = null;
     renderDay();
+    if (state.day === 2) playNASA("radio");
+    if (state.day === 3) playEffect("warning");
   }
   window.scrollTo({top:0, behavior:"smooth"});
 }
 function renderEnding() {
   const lost = failed();
+  document.querySelector(".ending-card").classList.toggle("win", !lost);
+  const badge = lost ? "badgeTryAgain" : state.science >= 3 ? "badgeScientist" : state.science >= 1 ? "badgeExplorer" : "badgeGuardian";
+  $("achievement").textContent = (lost ? "🚀 " : "🏅 ") + label(badge);
   $("ending-title").textContent = label(lost ? "loseTitle" : "winTitle");
   if (lost) {
     const reason = state.oxygen <= 0 ? "reasonOxygen" : state.energy <= 0 ? "reasonEnergy" : "reasonShield";
@@ -390,6 +480,12 @@ function renderEnding() {
 $("start").addEventListener("click", startGame);
 $("restart").addEventListener("click", startGame);
 $("again").addEventListener("click", startGame);
+$("sound-toggle").addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  if (!soundEnabled) stopAudio();
+  else playEffect("choice");
+  updateSoundButton();
+});
 $("lang-es").addEventListener("click", () => setLanguage("es"));
 $("lang-en").addEventListener("click", () => setLanguage("en"));
 setLanguage("es");

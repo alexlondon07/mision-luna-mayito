@@ -4,7 +4,7 @@ Juego corto para aprender a cuidar una base lunar. En cada uno de los siete día
 
 ## Abrir el juego
 
-Abre `index.html` en un navegador. No necesita instalar programas, crear una cuenta ni tener conexión para jugar. Los enlaces a las fuentes sí necesitan conexión. El botón **ES / EN** cambia todo el juego entre español e inglés, incluso durante una partida.
+Abre `index.html` en un navegador. No necesita instalar programas, crear una cuenta ni tener conexión para jugar. Los enlaces a las fuentes sí necesitan conexión. El botón **ES / EN** cambia todo el juego entre español e inglés, incluso durante una partida. Los audios empiezan al pulsar **Empezar la misión** y el botón 🔊 permite silenciarlos en cualquier momento.
 
 ## ¿Dónde puede ayudar cada niño?
 
@@ -14,13 +14,21 @@ Abre `index.html` en un navegador. No necesita instalar programas, crear una cue
 | `style.css` | Colores, tamaños y dibujos hechos con CSS | Cambiar los colores en `:root` |
 | `game.js` | Traducciones, siete días y decisiones | Cambiar una historia o una opción en `DAYS` |
 | `solar-event.js` | Copia pequeña de un evento real de DONKI | Ver los datos usados en la alerta |
-| `assets/` | Imágenes de Mayito y su equipo | Sustituir una imagen conservando su nombre |
+| `assets/icons/` | Dibujos originales de aire, energía y refugio | Cambiar el color o las formas de un SVG |
+| `assets/audio/` | Tres clips históricos de NASA | Escuchar los momentos de despegue, radio y aterrizaje |
+| `assets/` | Imágenes de Mayito, su equipo y el logo oficial del reto | Sustituir una imagen conservando su nombre |
 
 En `game.js`, `change:{energy:-2,science:1}` significa que la decisión usa dos puntos de energía y suma un descubrimiento. Para cambiar un texto de una misión, escribe las dos versiones: `es` y `en`. Los puntos son **reglas del juego**, no cantidades reales de oxígeno, electricidad ni radiación. El máximo de aire, energía y refugio es 10. Cada día la base gasta un punto de aire y uno de energía. Esto representa consumo diario, no una noche lunar: en la Luna, día y noche duran aproximadamente dos semanas terrestres cada uno ([NASA](https://science.nasa.gov/moon/moonlight/)).
 
-Los iconos de las opciones están en `CHOICE_ICONS`, al comienzo de la lógica del juego. Cada pareja representa las dos opciones de un día. Las tarjetas repiten los iconos de aire, energía y refugio del panel para mostrar cómo cambian después de la noche.
+Los iconos de las opciones están en `CHOICE_ICONS`, al comienzo de la lógica del juego. Cada pareja representa las dos opciones de un día. Las tarjetas repiten los iconos originales de aire, energía y refugio del panel para mostrar cómo cambian al final del día.
 
 Las ilustraciones de Mayito, Violeta y Rocco provienen de [Mi Superpoder es la Programación](https://misuperpodereslaprogramacion.com/). Mayito guía cada día; Violeta y Rocco aparecen en la historia.
+
+## Sonidos e iconos
+
+Los clips de despegue y aterrizaje de Apollo 11, y la señal de radio Quindar, provienen de [Historical Sounds de NASA](https://www.nasa.gov/historical-sounds/). El audio original está en inglés. Se oye al iniciar, al llegar a la comunicación con la Tierra y al completar la misión. El aviso en pantalla identifica cada clip. Los efectos breves de las decisiones se generan con JavaScript y son creación del proyecto. Se puede jugar con todo el sonido apagado. Al terminar, el juego entrega una insignia según los descubrimientos para animar a probar otra estrategia.
+
+El [logotipo de NASA Space Apps Challenge](https://www.spaceappschallenge.org/brand/) aparece únicamente en la tarjeta que enlaza al reto. Los iconos de aire, energía y refugio son dibujos originales del equipo para este juego. Este proyecto educativo es independiente; NASA no lo patrocina.
 
 ## Dato real que inspiró el juego
 
