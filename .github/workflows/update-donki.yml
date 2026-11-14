@@ -1,0 +1,31 @@
+name: Actualizar evento solar NASA
+
+on:
+  schedule:
+    - cron: '17 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Consultar NASA DONKI
+        env:
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY || 'DEMO_KEY' }}
+        run: python3 scripts/update_donki.py
+      - name: Guardar dato público si cambió
+        run: |
+          if ! git diff --quiet -- solar-event.js; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add solar-event.js
+            git commit -m "Update NASA DONKI solar event"
+            git push
+          fi

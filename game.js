@@ -116,7 +116,7 @@ const DAYS = [
   {
     icon:"☀️", nasa:true,
     title:{es:"¡Alerta del Sol!",en:"Solar alert!"},
-    story:{es:"Mayito recibe una alerta inspirada en un evento solar real de 2017. Las partículas del Sol pueden ser peligrosas. ¿Preparamos mejor el refugio o seguimos investigando?",en:"Mayito receives an alert inspired by a real solar event from 2017. Particles from the Sun can be dangerous. Should we improve the shelter or keep exploring?"},
+    story:{es:"Mayito recibe una alerta inspirada en un evento solar real registrado por NASA. Las partículas del Sol pueden ser peligrosas. ¿Preparamos mejor el refugio o seguimos investigando?",en:"Mayito receives an alert inspired by a real solar event recorded by NASA. Particles from the Sun can be dangerous. Should we improve the shelter or keep exploring?"},
     choices:[
       {title:{es:"Reforzar el refugio",en:"Strengthen the shelter"},detail:{es:"Protegemos mejor al equipo. Usamos energía.",en:"Protect the team better. Use power."},change:{shield:2,energy:-2},result:{es:"Mayito y Violeta mejoraron el refugio.",en:"Mayito and Violeta improved the shelter."},why:{es:"La protección reduce riesgos, pero construirla necesita recursos.",en:"Protection reduces risk, but building it needs resources."}},
       {title:{es:"Seguir investigando",en:"Keep exploring"},detail:{es:"Logramos un descubrimiento, con menos protección.",en:"Make a discovery with less protection."},change:{shield:-2,science:1},result:{es:"El equipo investigó, pero quedó menos protegido durante la alerta.",en:"The team explored, but had less protection during the alert."},why:{es:"Una misión científica debe equilibrar descubrimientos y seguridad.",en:"A science mission must balance discoveries and safety."}}

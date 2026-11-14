@@ -24,9 +24,11 @@ Las ilustraciones de Mayito, Violeta y Rocco provienen de [Mi Superpoder es la P
 
 ## Dato real que inspiró el juego
 
-Consultamos la [API DONKI/SEP de NASA](https://api.nasa.gov/) con una clave local y guardamos en `solar-event.js` la fecha, hora, tipo, instrumento y enlace de un [evento de partículas solares del 10 de septiembre de 2017](https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1). Ese registro inspira la alerta del día 4; el juego muestra su fecha y hora originales. **No** es una medida de radiación dentro de una base lunar ni una predicción para la Luna. El cambio de puntos por reforzar o no el refugio es una simplificación educativa creada para este juego.
+Consultamos la [API DONKI/SEP de NASA](https://api.nasa.gov/) y guardamos en `solar-event.js` la fecha, hora, tipo, instrumento y enlace de un evento real de partículas solares. El juego muestra esos datos en la alerta del día 4. La copia inicial corresponde al [evento del 10 de septiembre de 2017](https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1); si la API ofrece un evento SEP en los últimos 30 días, el actualizador guarda el más reciente. **No** es una medida de radiación dentro de una base lunar ni una predicción para la Luna. El cambio de puntos por reforzar o no el refugio es una simplificación educativa creada para este juego.
 
-Para actualizar la copia, guarda tu clave en `.env.local` como `NASA_API_KEY=tu_clave` y ejecuta `python3 scripts/update_donki.py`. El script usa la clave solo para la consulta y escribe únicamente datos públicos en `solar-event.js`. `.env.local` está excluido de Git. El juego no consulta la API cuando un niño juega y funciona sin conexión.
+Para actualizar la copia, guarda tu clave en `.env.local` como `NASA_API_KEY=tu_clave` y ejecuta `python3 scripts/update_donki.py`. El script usa la clave solo para la consulta y escribe únicamente datos públicos en `solar-event.js`. Si no hay registros nuevos, conserva el evento ya guardado. `.env.local` está excluido de Git. El juego no consulta la API cuando un niño juega y funciona sin conexión.
+
+En GitHub, el flujo `.github/workflows/update-donki.yml` consulta DONKI cada día y también puede ejecutarse manualmente. Usa el secreto `NASA_API_KEY` si está configurado en el repositorio; mientras tanto, usa `DEMO_KEY` de NASA. No publica ninguna clave. Si encuentra otro evento, guarda la nueva copia mediante un commit automático.
 
 La [ficha oficial del reto](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details) pide enseñar decisiones reales mediante un prototipo interactivo para niños de 7 a 12 años. Su [pestaña de recursos](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=resources) incluye DONKI.
 
