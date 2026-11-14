@@ -6,7 +6,7 @@ const TEXT = {
     resourcesNav:"Recursos del proyecto", resourcesEyebrow:"DE DÓNDE SALE CADA IDEA", resourcesHeading:"Recursos del proyecto",
     resourcesLead:"Estas fuentes nos ayudaron a crear la historia y explicar las decisiones. Los puntos de las barras son reglas educativas inventadas para el juego.",
     resourceChallengeTitle:"Reto oficial", resourceChallengeText:"Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.", resourceChallengeLink:"Leer el reto ↗",
-    resourceDonkiTitle:"Evento solar real · NASA DONKI", resourceDonkiText:"El registro de partículas solares del 10 de septiembre de 2017 inspira la alerta del día 4. No es una medida de radiación de nuestra base ficticia.", resourceDonkiLink:"Ver el registro ↗",
+    resourceDonkiTitle:"Evento solar real · NASA DONKI", resourceDonkiText:"Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.", resourceDonkiLink:"Ver el registro ↗", donkiRecord:"Registro NASA",
     resourceMoonTitle:"El ambiente lunar · NASA", resourceMoonText:"Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.", resourceMoonLink:"Explorar la ciencia ↗",
     resourceLifeTitle:"Soporte vital · NASA", resourceLifeText:"Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.", resourceLifeLink:"Leer sobre soporte vital ↗",
     resourceFoodTitle:"Comida espacial · CSA", resourceFoodText:"La guía educativa de la Agencia Espacial Canadiense inspiró la decisión sobre el huerto y las reservas de comida.", resourceFoodLink:"Ver la guía ↗",
@@ -25,20 +25,20 @@ const TEXT = {
     oxygenName:"Aire", oxygenHelp:"Lo que respiramos",
     energyName:"Energía", energyHelp:"Enciende las máquinas",
     shieldName:"Refugio", shieldHelp:"Nos protege",
-    nightCost:"Cada noche se usa 1 aire y 1 energía.",
+    nightCost:"Cada día la base usa 1 aire y 1 energía.",
     discoveries:"Descubrimientos", mayitoSays:"MAYITO DICE",
-    chooseTitle:"¿Qué harías tú?", choiceHelp:"Mira cómo quedaría la base después de la noche.",
-    day:"DÍA", of:"DE", afterNight:"Después de la noche",
+    chooseTitle:"¿Qué harías tú?", choiceHelp:"Mira cómo quedaría la base al final del día.",
+    day:"DÍA", of:"DE", afterNight:"Al final del día",
     cost:"Costo", danger:"¡Cuidado! Un recurso llegaría a cero.",
     whatHappened:"¿Qué pasó?", learnWhy:"Aprendiste que...",
     next:"Ir al día siguiente", seeResult:"Ver resultado",
-    sourceLead:"Dato real", sourceBody:"NASA registró este evento solar el 10 de septiembre de 2017. Los puntos de refugio son una regla del juego, no una medición en la Luna.",
+    sourceLead:"Dato real de NASA", sourceBody:"DONKI registró partículas solares el {date} a las {time} UTC. Este evento inspira la alerta del juego. Los puntos de refugio son reglas educativas, no una medición lunar.",
     sourceLink:"Ver registro DONKI ↗", missionEnd:"FIN DE LA MISIÓN",
     winTitle:"¡Misión cumplida, equipo!", winText:"Mayito y sus amigos completaron los 7 días. Descubrimientos: ",
     loseTitle:"¡Mayito quiere intentarlo otra vez!", loseText:"La misión terminó en el día ",
     because:" porque ", reasonOxygen:"se acabó el aire", reasonEnergy:"se agotó la energía", reasonShield:"el refugio quedó sin protección",
     winLearning:"¡Buen trabajo! Una base necesita equilibrio: la mejor decisión cambia según lo que falta.",
-    loseLearning:"Probemos otra estrategia. Mira las barras antes de elegir y recuerda el costo de cada noche.",
+    loseLearning:"Probemos otra estrategia. Mira las barras antes de elegir y recuerda el consumo de cada día.",
     again:"¡Jugar otra vez!", footerNote:"Los puntos son reglas educativas, no medidas reales de una base lunar.",
     charactersSource:"Personajes: Mi Superpoder es la Programación ↗", nasaSource:"Evento solar: NASA DONKI ↗"
   },
@@ -47,7 +47,7 @@ const TEXT = {
     resourcesNav:"Project resources", resourcesEyebrow:"WHERE EACH IDEA CAME FROM", resourcesHeading:"Project resources",
     resourcesLead:"These sources helped us write the story and explain each decision. The bars use learning rules created for this game, not real measurements.",
     resourceChallengeTitle:"Official challenge", resourceChallengeText:"Sets the goal: a game for children that shows the trade-offs of running a lunar or Martian base.", resourceChallengeLink:"Read the challenge ↗",
-    resourceDonkiTitle:"Real solar event · NASA DONKI", resourceDonkiText:"A solar particle event recorded on September 10, 2017 inspired the day 4 alert. It is not a radiation reading from our fictional base.", resourceDonkiLink:"See the record ↗",
+    resourceDonkiTitle:"Real solar event · NASA DONKI", resourceDonkiText:"We queried the DONKI API and saved a real solar particle event. This record inspires the day 4 alert; points are learning rules.", resourceDonkiLink:"See the record ↗", donkiRecord:"NASA record",
     resourceMoonTitle:"The lunar environment · NASA", resourceMoonText:"Explains why people on the Moon need protection from space radiation and extreme temperatures.", resourceMoonLink:"Explore the science ↗",
     resourceLifeTitle:"Life support · NASA", resourceLifeText:"Helped us explain why breathable air and recycling are essential for a crew.", resourceLifeLink:"Read about life support ↗",
     resourceFoodTitle:"Food in space · CSA", resourceFoodText:"The Canadian Space Agency's educational toolkit inspired the garden and stored-food choice.", resourceFoodLink:"See the toolkit ↗",
@@ -66,20 +66,20 @@ const TEXT = {
     oxygenName:"Air", oxygenHelp:"What we breathe",
     energyName:"Power", energyHelp:"Runs the machines",
     shieldName:"Shelter", shieldHelp:"Keeps us safe",
-    nightCost:"Each night uses 1 air and 1 power.",
+    nightCost:"Each day the base uses 1 air and 1 power.",
     discoveries:"Discoveries", mayitoSays:"MAYITO SAYS",
-    chooseTitle:"What would you do?", choiceHelp:"See how the base would look after tonight.",
-    day:"DAY", of:"OF", afterNight:"After tonight",
+    chooseTitle:"What would you do?", choiceHelp:"See how the base would look at the end of the day.",
+    day:"DAY", of:"OF", afterNight:"At the end of the day",
     cost:"Cost", danger:"Watch out! A resource would reach zero.",
     whatHappened:"What happened?", learnWhy:"You learned that...",
     next:"Go to the next day", seeResult:"See result",
-    sourceLead:"Real data", sourceBody:"NASA recorded this solar event on September 10, 2017. Shelter points are a game rule, not a measurement on the Moon.",
+    sourceLead:"Real NASA data", sourceBody:"DONKI recorded solar particles on {date} at {time} UTC. This event inspires the game alert. Shelter points are learning rules, not a lunar measurement.",
     sourceLink:"See the DONKI record ↗", missionEnd:"END OF MISSION",
     winTitle:"Mission complete, team!", winText:"Mayito and friends completed all 7 days. Discoveries: ",
     loseTitle:"Mayito wants to try again!", loseText:"The mission ended on day ",
     because:" because ", reasonOxygen:"the base ran out of air", reasonEnergy:"the base ran out of power", reasonShield:"the shelter lost its protection",
     winLearning:"Great work! A base needs balance. The best choice changes with what the team needs.",
-    loseLearning:"Let's try another strategy. Check the bars before choosing, and remember each night's cost.",
+    loseLearning:"Let's try another strategy. Check the bars before choosing, and remember each day's consumption.",
     again:"Play again!", footerNote:"Points are learning rules, not real measurements of a lunar base.",
     charactersSource:"Characters: Mi Superpoder es la Programación ↗", nasaSource:"Solar event: NASA DONKI ↗"
   }
@@ -143,15 +143,15 @@ const DAYS = [
   {
     icon:"🚀",
     title:{es:"¡Último día en la base!",en:"Last day at the base!"},
-    story:{es:"¡Ya casi lo logramos! Antes de terminar, Mayito puede hacer una última investigación o asegurar el aire para la noche final.",en:"We are almost there! Before the mission ends, Mayito can do one last experiment or secure air for the final night."},
+    story:{es:"¡Ya casi lo logramos! Antes de terminar, Mayito puede hacer una última investigación o asegurar el aire para el último día.",en:"We are almost there! Before the mission ends, Mayito can do one last experiment or secure air for the final day."},
     choices:[
       {title:{es:"Hacer el experimento",en:"Do the experiment"},detail:{es:"Un descubrimiento más. Cuesta energía.",en:"One more discovery. It costs power."},change:{science:1,energy:-2},result:{es:"¡Experimento terminado! Ahora comprobemos si la base sigue segura.",en:"Experiment complete! Now let's check whether the base is still safe."},why:{es:"Completar objetivos científicos importa, pero la tripulación debe poder volver a casa.",en:"Science goals matter, but the crew must remain safe."}},
-      {title:{es:"Asegurar el aire",en:"Secure the air"},detail:{es:"Guardamos aire para terminar la misión.",en:"Save air to finish the mission."},change:{oxygen:2,energy:-1},result:{es:"Mayito dejó aire listo para la última noche.",en:"Mayito saved air for the final night."},why:{es:"Una misión también debe reservar recursos para terminar con seguridad.",en:"A mission must also reserve resources for a safe finish."}}
+      {title:{es:"Asegurar el aire",en:"Secure the air"},detail:{es:"Guardamos aire para terminar la misión.",en:"Save air to finish the mission."},change:{oxygen:2,energy:-1},result:{es:"Mayito dejó aire listo para terminar la misión.",en:"Mayito saved air to finish the mission."},why:{es:"Una misión también debe reservar recursos para terminar con seguridad.",en:"A mission must also reserve resources for a safe finish."}}
     ]
   }
 ];
 
-const NASA_URL = "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1";
+const NASA_URL = NASA_EVENT.link;
 // Cada pareja corresponde a las dos opciones de un día.
 const CHOICE_ICONS = [
   ["⚡", "🫧"], ["🌱", "🥫"], ["📡", "🔋"], ["🛡️", "🔭"],
@@ -168,6 +168,15 @@ function translate(value) {
 function label(key) {
   return TEXT[language][key];
 }
+function donkiDate() {
+  const date = new Date(NASA_EVENT.eventTime);
+  return new Intl.DateTimeFormat(language === "es" ? "es-CO" : "en-US", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"}).format(date);
+}
+function renderDonkiCard() {
+  const time = NASA_EVENT.eventTime.slice(11, 16);
+  $("donki-record").textContent = label("donkiRecord") + ": SEP · " + donkiDate() + " · " + time + " UTC";
+  $("donki-record-link").href = NASA_URL;
+}
 function show(screen) {
   for (const id of ["intro", "play", "ending"]) $(id).classList.toggle("hidden", id !== screen);
 }
@@ -178,6 +187,7 @@ function setLanguage(nextLanguage) {
   for (const element of document.querySelectorAll("[data-i18n]")) {
     element.textContent = label(element.dataset.i18n);
   }
+  renderDonkiCard();
   $("lang-es").setAttribute("aria-pressed", language === "es");
   $("lang-en").setAttribute("aria-pressed", language === "en");
   $("progress").setAttribute("aria-label", language === "es" ? "Progreso de la misión" : "Mission progress");
@@ -233,7 +243,7 @@ function renderSource(event) {
   if (!event.nasa) return;
   const strong = document.createElement("strong");
   strong.textContent = label("sourceLead") + ": ";
-  const words = document.createTextNode(label("sourceBody") + " ");
+  const words = document.createTextNode(label("sourceBody").replace("{date}", donkiDate()).replace("{time}", NASA_EVENT.eventTime.slice(11, 16)) + " ");
   const link = document.createElement("a");
   link.href = NASA_URL;
   link.target = "_blank";

@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#451471">
   <title>Misión Luna con Mayito</title>
   <link rel="stylesheet" href="style.css">
+  <script src="solar-event.js" defer></script>
   <script src="game.js" defer></script>
 </head>
 <body>
@@ -54,13 +55,13 @@
             <div class="meter"><div class="meter-top"><span class="meter-name"><span class="meter-symbol oxygen" aria-hidden="true">🫧</span><span data-i18n="oxygenName">Aire</span></span><strong id="oxygen-value"></strong></div><div class="track"><div id="oxygen-bar" class="fill oxygen"></div></div><small data-i18n="oxygenHelp">Lo que respiramos</small></div>
             <div class="meter"><div class="meter-top"><span class="meter-name"><span class="meter-symbol energy" aria-hidden="true">⚡</span><span data-i18n="energyName">Energía</span></span><strong id="energy-value"></strong></div><div class="track"><div id="energy-bar" class="fill energy"></div></div><small data-i18n="energyHelp">Enciende las máquinas</small></div>
             <div class="meter"><div class="meter-top"><span class="meter-name"><span class="meter-symbol shield" aria-hidden="true">🛡️</span><span data-i18n="shieldName">Refugio</span></span><strong id="shield-value"></strong></div><div class="track"><div id="shield-bar" class="fill shield"></div></div><small data-i18n="shieldHelp">Nos protege afuera</small></div>
-            <div class="night-note"><span aria-hidden="true">🌙</span><span data-i18n="nightCost">Cada noche se usa 1 aire y 1 energía.</span></div>
+            <div class="night-note"><span aria-hidden="true">⏱️</span><span data-i18n="nightCost">Cada día la base usa 1 aire y 1 energía.</span></div>
             <p class="score-line"><span aria-hidden="true">⭐</span> <span data-i18n="discoveries">Descubrimientos</span>: <strong id="science-value">0</strong></p>
           </aside>
           <div class="story-card">
             <div class="narrator"><img src="assets/mayito.webp" alt="" class="narrator-image"><div class="speech"><span class="speech-label" data-i18n="mayitoSays">MAYITO DICE</span><p id="event-story"></p></div></div>
             <div id="event-source" class="source-note hidden"></div>
-            <div id="choice-area"><h2 data-i18n="chooseTitle">¿Qué harías tú?</h2><p class="choice-help" data-i18n="choiceHelp">Mira cómo quedaría la base después de la noche.</p><div id="choices" class="choices"></div></div>
+            <div id="choice-area"><h2 data-i18n="chooseTitle">¿Qué harías tú?</h2><p class="choice-help" data-i18n="choiceHelp">Mira cómo quedaría la base al final del día.</p><div id="choices" class="choices"></div></div>
             <div id="result" class="result hidden"></div>
           </div>
         </div>
@@ -74,7 +75,7 @@
         <p class="resources-lead" data-i18n="resourcesLead">Estas fuentes nos ayudaron a crear la historia y explicar las decisiones. Los puntos de las barras son reglas educativas inventadas para el juego.</p>
         <div class="resource-list">
           <article class="resource-card"><span aria-hidden="true">🧭</span><h3 data-i18n="resourceChallengeTitle">Reto oficial</h3><p data-i18n="resourceChallengeText">Define el objetivo: un juego para niños que muestre los costos de mantener una base lunar o marciana.</p><a href="https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details" target="_blank" rel="noopener noreferrer" data-i18n="resourceChallengeLink">Leer el reto ↗</a></article>
-          <article class="resource-card"><span aria-hidden="true">☀️</span><h3 data-i18n="resourceDonkiTitle">Evento solar real · NASA DONKI</h3><p data-i18n="resourceDonkiText">El registro de partículas solares del 10 de septiembre de 2017 inspira la alerta del día 4. No es una medida de radiación de nuestra base ficticia.</p><a href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1" target="_blank" rel="noopener noreferrer" data-i18n="resourceDonkiLink">Ver el registro ↗</a></article>
+          <article class="resource-card"><span aria-hidden="true">☀️</span><h3 data-i18n="resourceDonkiTitle">Evento solar real · NASA DONKI</h3><p data-i18n="resourceDonkiText">Consultamos la API de DONKI y guardamos un evento real de partículas solares. Este registro inspira la alerta del día 4; los puntos son reglas educativas.</p><p id="donki-record" class="donki-record"></p><a id="donki-record-link" href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1" target="_blank" rel="noopener noreferrer" data-i18n="resourceDonkiLink">Ver el registro ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🛡️</span><h3 data-i18n="resourceMoonTitle">El ambiente lunar · NASA</h3><p data-i18n="resourceMoonText">Explica por qué la Luna necesita protección frente a la radiación espacial y temperaturas extremas.</p><a href="https://science.nasa.gov/moon/weather-on-the-moon/" target="_blank" rel="noopener noreferrer" data-i18n="resourceMoonLink">Explorar la ciencia ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🫧</span><h3 data-i18n="resourceLifeTitle">Soporte vital · NASA</h3><p data-i18n="resourceLifeText">Nos ayudó a explicar por qué el aire y el reciclaje son tareas esenciales para la tripulación.</p><a href="https://www.nasa.gov/humans-in-space/deep-space-habitation-overview/" target="_blank" rel="noopener noreferrer" data-i18n="resourceLifeLink">Leer sobre soporte vital ↗</a></article>
           <article class="resource-card"><span aria-hidden="true">🌱</span><h3 data-i18n="resourceFoodTitle">Comida espacial · CSA</h3><p data-i18n="resourceFoodText">La guía educativa de la Agencia Espacial Canadiense inspiró la decisión sobre el huerto y las reservas de comida.</p><a href="https://www.asc-csa.gc.ca/eng/youth-educators/toolkits/food-production/" target="_blank" rel="noopener noreferrer" data-i18n="resourceFoodLink">Ver la guía ↗</a></article>
@@ -83,7 +84,7 @@
         <p class="build-note" data-i18n="buildNote">🧩 Hecho con HTML, CSS y JavaScript. Usamos Git para guardar las versiones del proyecto.</p>
       </section>
     </main>
-    <footer><p data-i18n="footerNote">Puntos del juego = reglas educativas, no medidas reales de una base lunar.</p><div><a href="https://misuperpodereslaprogramacion.com/" target="_blank" rel="noopener noreferrer" data-i18n="charactersSource">Personajes: Mi Superpoder es la Programación ↗</a><a href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1" target="_blank" rel="noopener noreferrer" data-i18n="nasaSource">Evento solar: NASA DONKI ↗</a></div></footer>
+    <footer><p data-i18n="footerNote">Puntos del juego = reglas educativas, no medidas reales de una base lunar.</p><div><a href="https://misuperpodereslaprogramacion.com/" target="_blank" rel="noopener noreferrer" data-i18n="charactersSource">Personajes: Mi Superpoder es la Programación ↗</a><a href="https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1" target="_blank" rel="noopener noreferrer" data-i18n="nasaSource">Evento solar: NASA DONKI ↗</a></div></footer>
   </div>
 </body>
 </html>

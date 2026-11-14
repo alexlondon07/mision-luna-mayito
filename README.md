@@ -13,9 +13,10 @@ Abre `index.html` en un navegador. No necesita instalar programas, crear una cue
 | `index.html` | Estructura de las pantallas | Agregar una sección o imagen |
 | `style.css` | Colores, tamaños y dibujos hechos con CSS | Cambiar los colores en `:root` |
 | `game.js` | Traducciones, siete días y decisiones | Cambiar una historia o una opción en `DAYS` |
+| `solar-event.js` | Copia pequeña de un evento real de DONKI | Ver los datos usados en la alerta |
 | `assets/` | Imágenes de Mayito y su equipo | Sustituir una imagen conservando su nombre |
 
-En `game.js`, `change:{energy:-2,science:1}` significa que la decisión usa dos puntos de energía y suma un descubrimiento. Para cambiar un texto de una misión, escribe las dos versiones: `es` y `en`. Los puntos son **reglas del juego**, no cantidades reales de oxígeno, electricidad ni radiación. El máximo de aire, energía y refugio es 10. Cada noche se gasta un punto de aire y uno de energía.
+En `game.js`, `change:{energy:-2,science:1}` significa que la decisión usa dos puntos de energía y suma un descubrimiento. Para cambiar un texto de una misión, escribe las dos versiones: `es` y `en`. Los puntos son **reglas del juego**, no cantidades reales de oxígeno, electricidad ni radiación. El máximo de aire, energía y refugio es 10. Cada día la base gasta un punto de aire y uno de energía. Esto representa consumo diario, no una noche lunar: en la Luna, día y noche duran aproximadamente dos semanas terrestres cada uno ([NASA](https://science.nasa.gov/moon/moonlight/)).
 
 Los iconos de las opciones están en `CHOICE_ICONS`, al comienzo de la lógica del juego. Cada pareja representa las dos opciones de un día. Las tarjetas repiten los iconos de aire, energía y refugio del panel para mostrar cómo cambian después de la noche.
 
@@ -23,7 +24,9 @@ Las ilustraciones de Mayito, Violeta y Rocco provienen de [Mi Superpoder es la P
 
 ## Dato real que inspiró el juego
 
-NASA registró un [evento de partículas solares el 10 de septiembre de 2017 en DONKI](https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/1). Ese registro inspira la alerta del día 4. **No** es una medida de radiación dentro de una base lunar ni una predicción para la Luna. El cambio de puntos por reforzar o no el refugio es una simplificación educativa creada para este juego.
+Consultamos la [API DONKI/SEP de NASA](https://api.nasa.gov/) con una clave local y guardamos en `solar-event.js` la fecha, hora, tipo, instrumento y enlace de un [evento de partículas solares del 10 de septiembre de 2017](https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/13101/-1). Ese registro inspira la alerta del día 4; el juego muestra su fecha y hora originales. **No** es una medida de radiación dentro de una base lunar ni una predicción para la Luna. El cambio de puntos por reforzar o no el refugio es una simplificación educativa creada para este juego.
+
+Para actualizar la copia, guarda tu clave en `.env.local` como `NASA_API_KEY=tu_clave` y ejecuta `python3 scripts/update_donki.py`. El script usa la clave solo para la consulta y escribe únicamente datos públicos en `solar-event.js`. `.env.local` está excluido de Git. El juego no consulta la API cuando un niño juega y funciona sin conexión.
 
 La [ficha oficial del reto](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details) pide enseñar decisiones reales mediante un prototipo interactivo para niños de 7 a 12 años. Su [pestaña de recursos](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=resources) incluye DONKI.
 
