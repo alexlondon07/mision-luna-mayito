@@ -2,6 +2,21 @@
 const SPACE_WEATHER_EVENTS = [
   {
     "type": "CME",
+    "issued": "2026-11-15T14:32Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49569/1"
+  },
+  {
+    "type": "CME",
+    "issued": "2026-11-15T01:21Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49561/1"
+  },
+  {
+    "type": "RBE",
+    "issued": "2026-11-14T21:34Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49556/1"
+  },
+  {
+    "type": "CME",
     "issued": "2026-11-13T16:25Z",
     "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49532/1"
   },
@@ -19,20 +34,5 @@ const SPACE_WEATHER_EVENTS = [
     "type": "RBE",
     "issued": "2026-11-10T21:31Z",
     "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49486/1"
-  },
-  {
-    "type": "CME",
-    "issued": "2026-11-10T16:29Z",
-    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49483/1"
-  },
-  {
-    "type": "CME",
-    "issued": "2026-11-10T13:06Z",
-    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49474/1"
-  },
-  {
-    "type": "RBE",
-    "issued": "2026-11-08T21:28Z",
-    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49464/1"
   }
 ];
