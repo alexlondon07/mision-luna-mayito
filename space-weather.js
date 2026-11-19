@@ -1,6 +1,11 @@
 // Hasta siete boletines públicos guardados de NASA DONKI. Actualizar con: python3 scripts/update_donki.py
 const SPACE_WEATHER_EVENTS = [
   {
+    "type": "Report",
+    "issued": "2026-11-18T21:03Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49646/1"
+  },
+  {
     "type": "RBE",
     "issued": "2026-11-18T16:51Z",
     "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49636/1"
@@ -29,10 +34,5 @@ const SPACE_WEATHER_EVENTS = [
     "type": "CME",
     "issued": "2026-11-16T19:38Z",
     "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49595/1"
-  },
-  {
-    "type": "CME",
-    "issued": "2026-11-15T22:33Z",
-    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49583/1"
   }
 ];
