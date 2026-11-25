@@ -2,6 +2,11 @@
 const SPACE_WEATHER_EVENTS = [
   {
     "type": "Report",
+    "issued": "2026-11-25T21:08Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49766/1"
+  },
+  {
+    "type": "Report",
     "issued": "2026-11-18T21:03Z",
     "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49646/1"
   },
@@ -29,10 +34,5 @@ const SPACE_WEATHER_EVENTS = [
     "type": "RBE",
     "issued": "2026-11-16T21:32Z",
     "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49596/1"
-  },
-  {
-    "type": "CME",
-    "issued": "2026-11-16T19:38Z",
-    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/49595/1"
   }
 ];
